@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>
+<channel>
+<atom:link href='http://clojuredatascience.com/' rel='self' type='application/rss+xml'/>
+<title>
+Clojure for Data Science
+</title>
+<link>
+http://clojuredatascience.com/
+</link>
+<description>
+This is the blog to accompany the book Clojure for Data Science published by Packt.
+</description>
+<lastBuildDate>
+Sat, 05 Sep 2015 14:00:46 +0100
+</lastBuildDate>
+<generator>
+clj-rss
+</generator>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2015-04-07-hello-world.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2015-04-07-hello-world.html
+</link>
+<title>
+Hello, World!
+</title>
+<description>
+&lt;p&gt;Welcome to the companion website for the book &lt;strong&gt;Clojure for Data Science&lt;/strong&gt;. The book is currently being written by &lt;a href='http://henrygarner.com'&gt;Henry Garner&lt;/a&gt; and will be published by &lt;a href='https://www.packtpub.com/'&gt;Packt&lt;/a&gt; in the second half of 2015.&lt;/p&gt;&lt;p&gt;All code examples will be made available on the book's &lt;a href='https://github.com/clojuredatascience/'&gt;GitHub repo&lt;/a&gt; for download. As publication approaches this site (and the related &lt;a href='https://github.com/clojuredatascience/clojuredatascience.github.io/wiki'&gt;wiki&lt;/a&gt;) will be updated with excerpts and further information related to data science in general and Clojure in particular.&lt;/p&gt;&lt;p&gt;See you soon.&lt;/p&gt;
+</description>
+<pubDate>
+Tue, 07 Apr 2015 00:00:00 +0100
+</pubDate>
+</item>
+</channel>
+</rss>
