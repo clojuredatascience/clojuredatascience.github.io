@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom'>
+<channel>
+<atom:link href='http://clojuredatascience.com/' rel='self' type='application/rss+xml'/>
+<title>
+Clojure for Data Science
+</title>
+<link>
+http://clojuredatascience.com/
+</link>
+<description>
+This is the blog to accompany the book Clojure for Data Science published by Packt.
+</description>
+<lastBuildDate>
+Sat, 05 Sep 2015 14:00:46 +0100
+</lastBuildDate>
+<generator>
+clj-rss
+</generator>
+</channel>
+</rss>
