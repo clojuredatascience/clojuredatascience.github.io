@@ -12,11 +12,28 @@ http://clojuredatascience.com/
 This is the blog to accompany the book Clojure for Data Science published by Packt.
 </description>
 <lastBuildDate>
-Sat, 05 Sep 2015 15:19:19 +0100
+Sat, 05 Sep 2015 15:43:12 +0100
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2015-09-05-regression-classification-clustering-clojure.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2015-09-05-regression-classification-clustering-clojure.html
+</link>
+<title>
+Clojure for Data Science: an Overview
+</title>
+<description>
+&lt;p&gt;Below are slides from a talk given to the &lt;a href='https://bristolclojurians.github.io/'&gt;Bristol Clojurians&lt;/a&gt; on April 21st 2015.&lt;/p&gt;&lt;p&gt;I gave an overview of several key techniques presented in &lt;a href='http://www.amazon.co.uk/gp/product/1784397180/ref=as&amp;#95;li&amp;#95;tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1784397180&amp;linkCode=as2&amp;tag=henrygarnerco-21'&gt;Clojure for Data Science&lt;/a&gt;, including linear &amp;amp; logistic regression, &lt;em&gt;k&lt;/em&gt;-means clustering. I gave a brief demonstration of visualization with &lt;a href='http://quil.info/'&gt;Quil&lt;/a&gt; and of writing a Hadoop job with &lt;a href='https://github.com/damballa/parkour'&gt;Parkour&lt;/a&gt; to make use of the &lt;a href='http://mahout.apache.org/'&gt;Mahout&lt;/a&gt; machine learning library.&lt;/p&gt;&lt;p&gt;&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;324a4d25b6d541dbadd9e0fb14dc1a51&quot; data-ratio=&quot;1.37081659973226&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;&lt;p&gt;The content of the slides is available at &lt;a href='https://github.com/henrygarner/clojure-data-science'&gt;https://github.com/henrygarner/clojure-data-science&lt;/a&gt;.&lt;/p&gt;
+</description>
+<pubDate>
+Sat, 05 Sep 2015 00:00:00 +0100
+</pubDate>
+</item>
 <item>
 <guid>
 http://clojuredatascience.com/posts/2015-09-05-published.html
