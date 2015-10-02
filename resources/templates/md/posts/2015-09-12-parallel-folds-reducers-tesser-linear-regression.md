@@ -1,4 +1,4 @@
-{:title "Parallel Folds: Reducers, Tesser and Hadoop"
+{:title "Parallel Folds: Reducers, Tesser and Linear Regression"
  :layout :post
  :tags  ["clojure" "reducers" "tesser" "big data" "linear regression" "statistics"]}
 
