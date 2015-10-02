@@ -136,6 +136,9 @@ pre, code, .hljs {
         margin-top: 30px;
         padding: 30px 40px;
     }
+    #content img {
+        width: 100%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -147,6 +150,9 @@ pre, code, .hljs {
     }
     #content{
         padding: 15px;
+    }
+    #content img {
+        width: 100%;
     }
     #post-meta .right {
         float:left;
