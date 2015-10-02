@@ -12,20 +12,20 @@ http://clojuredatascience.com/
 This is the blog to accompany the book Clojure for Data Science published by Packt.
 </description>
 <lastBuildDate>
-Fri, 02 Oct 2015 09:44:26 +0100
+Fri, 02 Oct 2015 10:56:44 +0100
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
 <item>
 <guid>
-http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-hadoop.html
+http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html
 </guid>
 <link>
-http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-hadoop.html
+http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html
 </link>
 <title>
-Parallel Folds: Reducers, Tesser and Hadoop
+Parallel Folds: Reducers, Tesser and Linear Regression
 </title>
 <description>
 &lt;p&gt;In this article, extracted from &lt;em&gt;Chapter 5, &lt;a href='https://www.packtpub.com/big-data-and-business-intelligence/clojure-data-science'&gt;Clojure for Data Science&lt;/a&gt;&lt;/em&gt;, I'll show some principles of efficient big data analysis and how they can be applied using Clojure. I'll be using three Clojure libraries: &lt;strong&gt;reducers&lt;/strong&gt;, &lt;strong&gt;Iota&lt;/strong&gt;, and &lt;strong&gt;Tesser&lt;/strong&gt; to show how the calculation of statistics can be scaled to very large volumes of data through parallelism and by avoiding unneccessary iterations over the data.&lt;/p&gt;&lt;p&gt;By the end of this article you'll be able to build a predictive model using linear regression. Linear regression is a machine learning algorithm that attempts to learn a linear relationship between a single output (usually called the &lt;em&gt;dependent variable&lt;/em&gt;) and one or more inputs (often called the &lt;em&gt;independent variables&lt;/em&gt;). We'll be using data from the U.S. Internal Revenue Service (IRS) on ZIP code-level statistics of income, and attempt to learn a simple linear relationship between two variables: the &quot;salaries and wages&quot; and &quot;unemployment compensation&quot; figures.&lt;/p&gt;&lt;h2&gt;&lt;a name=&quot;download&amp;#95;the&amp;#95;code&amp;#95;and&amp;#95;data&quot;&gt;&lt;/a&gt;Download the code and data&lt;/h2&gt;&lt;p&gt;All the code is contained in the example project at &lt;a href='https://github.com/clojuredatascience/ch5-big-data'&gt;https://github.com/clojuredatascience/ch5-big-data&lt;/a&gt;. If you'd like to follow along with any of the examples, clone this repository to your local machine.&lt;/p&gt;&lt;h3&gt;&lt;a name=&quot;download&amp;#95;the&amp;#95;data&quot;&gt;&lt;/a&gt;Download the data&lt;/h3&gt;&lt;p&gt;The IRS data I'll use for the examples contains selected income and tax items classified by state, ZIP code, and income classes. It's 100MB in size and should be downloaded from &lt;a href='http://www.irs.gov/pub/irs-soi/12zpallagi.csv'&gt;http://www.irs.gov/pub/irs-soi/12zpallagi.csv&lt;/a&gt; to the example code's &lt;code&gt;data&lt;/code&gt; directory. Since the file contains the IRS &lt;em&gt;Statistics of Income&lt;/em&gt; we've renamed the file to &quot;soi.csv&quot; for the examples.&lt;/p&gt;&lt;p&gt;If you're running *nix or OS X, there's a little shell script in the project which will download and rename the data for you. Run it on the command line within the project's directory like this:&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;sh&quot;&gt;script/download-data.sh
