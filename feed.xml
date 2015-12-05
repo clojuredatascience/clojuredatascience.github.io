@@ -12,11 +12,28 @@ http://clojuredatascience.com/
 This is the blog to accompany the book Clojure for Data Science published by Packt.
 </description>
 <lastBuildDate>
-Fri, 02 Oct 2015 10:56:44 +0100
+Sat, 05 Dec 2015 12:34:17 +0000
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2015-12-05-expressive-parallel-analytics-with-clojure.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2015-12-05-expressive-parallel-analytics-with-clojure.html
+</link>
+<title>
+Expressive Parallel Analytics with Clojure
+</title>
+<description>
+&lt;p&gt;&lt;a href='https://twitter.com/henrygarner'&gt;Henry&lt;/a&gt; spoke at &lt;a href='https://skillsmatter.com/conferences/6861-clojure-exchange-2015#program'&gt;Clojure eXchange 2015&lt;/a&gt; on the subject of parallel folds using Clojure's transducers.&lt;/p&gt;&lt;p&gt;&lt;blockquote&gt;&lt;p&gt; Sharing experience gained from his work on a mission-critical data product earlier this year, Henry will speak about some newer features of Clojure that enable data scientists to write concise, expressive and performant data processing code. He’ll explore transducers and reducing functions, and show how simple functional combinators can make even sophisticated analytical code both faster and easier to comprehend. &lt;/p&gt;&lt;/blockquote&gt;&lt;/p&gt;&lt;p&gt;The key takeaway is that with transducers, reducing functions must now provide an arity-1 &lt;strong&gt;completer&lt;/strong&gt; implementation which provides them with the opportunity to convert an accumulated value into a final output. Together with the (optional) arity-0 &lt;strong&gt;initializer&lt;/strong&gt; this provides reducing functions the ability to wrap arbitrarily intricate state. The natural composability of transducers can be mirrored with similarly composable step functions to build up sophisticated parallel computations.&lt;/p&gt;&lt;p&gt;You can see a &lt;a href='https://skillsmatter.com/skillscasts/7243-expressive-parallel-analytics-with-clojure'&gt;video of the talk&lt;/a&gt; on Skills Matter's website, the &lt;a href='https://github.com/henrygarner/cljx-december-2015'&gt;org-mode slides&lt;/a&gt;, or a PDF of the presentation below.&lt;/p&gt;&lt;p&gt;&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;9945344f8783426d8e5fdffc90d5d818&quot; data-ratio=&quot;1.37081659973226&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+</description>
+<pubDate>
+Sat, 05 Dec 2015 00:00:00 +0000
+</pubDate>
+</item>
 <item>
 <guid>
 http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html
@@ -311,7 +328,7 @@ http://clojuredatascience.com/posts/2015-09-05-regression-classification-cluster
 Clojure for Data Science: an Overview
 </title>
 <description>
-&lt;p&gt;Below are slides from a talk given to the &lt;a href='https://bristolclojurians.github.io/'&gt;Bristol Clojurians&lt;/a&gt; on April 21st 2015.&lt;/p&gt;&lt;p&gt;The talk was in two parts, each around an hour, and in each I attempted to give a practical overview of several key techniques presented in &lt;a href='http://www.amazon.co.uk/gp/product/1784397180/ref=as&amp;#95;li&amp;#95;tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1784397180&amp;linkCode=as2&amp;tag=henrygarnerco-21'&gt;Clojure for Data Science&lt;/a&gt;, including linear &amp;amp; logistic regression and &lt;em&gt;k&lt;/em&gt;-means clustering. I also gave a brief demonstration of visualization with &lt;a href='http://quil.info/'&gt;Quil&lt;/a&gt; and of writing a Hadoop job with &lt;a href='https://github.com/damballa/parkour'&gt;Parkour&lt;/a&gt; to make use of the &lt;a href='http://mahout.apache.org/'&gt;Mahout&lt;/a&gt; machine learning library.&lt;/p&gt;&lt;p&gt;&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;324a4d25b6d541dbadd9e0fb14dc1a51&quot; data-ratio=&quot;1.37081659973226&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;&lt;p&gt;The content of the slides is available at &lt;a href='https://github.com/henrygarner/clojure-data-science'&gt;https://github.com/henrygarner/clojure-data-science&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Below are slides from a talk given to the &lt;a href='https://bristolclojurians.github.io/'&gt;Bristol Clojurians&lt;/a&gt; on April 21st 2015.&lt;/p&gt;&lt;p&gt;The talk was in two parts, each around an hour, and in each I attempted to give a practical overview of several key techniques presented in &lt;a href='http://www.amazon.co.uk/gp/product/1784397180/ref=as&amp;#95;li&amp;#95;tl?ie=UTF8&amp;camp=1634&amp;creative=19450&amp;creativeASIN=1784397180&amp;linkCode=as2&amp;tag=henrygarnerco-21'&gt;Clojure for Data Science&lt;/a&gt;, including linear &amp;amp; logistic regression and &lt;em&gt;k&lt;/em&gt;-means clustering. I also gave a brief demonstration of visualization with &lt;a href='http://quil.info/'&gt;Quil&lt;/a&gt; and of writing a Hadoop job with &lt;a href='https://github.com/damballa/parkour'&gt;Parkour&lt;/a&gt; to make use of the &lt;a href='http://mahout.apache.org/'&gt;Mahout&lt;/a&gt; machine learning library.&lt;/p&gt;&lt;p&gt;&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;324a4d25b6d541dbadd9e0fb14dc1a51&quot; data-ratio=&quot;1.37081659973226&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;&lt;p&gt;The content of the slides is available at &lt;a href='https://github.com/henrygarner/clojure-data-science'&gt;https://github.com/henrygarner/clojure-data-science&lt;/a&gt;. x&lt;/p&gt;
 </description>
 <pubDate>
 Sat, 05 Sep 2015 00:00:00 +0100

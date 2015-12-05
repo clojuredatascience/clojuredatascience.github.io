@@ -57,280 +57,14 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">September 12, 2015</div>
+        <div class="col-lg-6">December 5, 2015</div>
         
     </div>
-    <h2>Parallel Folds: Reducers, Tesser and Linear Regression</h2>
+    <h2>Expressive Parallel Analytics with Clojure</h2>
 </div>
 <div>
     
-    <p>In this article, extracted from <em>Chapter 5, <a href='https://www.packtpub.com/big-data-and-business-intelligence/clojure-data-science'>Clojure for Data Science</a></em>, I'll show some principles of efficient big data analysis and how they can be applied using Clojure. I'll be using three Clojure libraries: <strong>reducers</strong>, <strong>Iota</strong>, and <strong>Tesser</strong> to show how the calculation of statistics can be scaled to very large volumes of data through parallelism and by avoiding unneccessary iterations over the data.</p><p>By the end of this article you'll be able to build a predictive model using linear regression. Linear regression is a machine learning algorithm that attempts to learn a linear relationship between a single output (usually called the <em>dependent variable</em>) and one or more inputs (often called the <em>independent variables</em>). We'll be using data from the U.S. Internal Revenue Service (IRS) on ZIP code-level statistics of income, and attempt to learn a simple linear relationship between two variables: the "salaries and wages" and "unemployment compensation" figures.</p><h2><a name="download&#95;the&#95;code&#95;and&#95;data"></a>Download the code and data</h2><p>All the code is contained in the example project at <a href='https://github.com/clojuredatascience/ch5-big-data'>https://github.com/clojuredatascience/ch5-big-data</a>. If you'd like to follow along with any of the examples, clone this repository to your local machine.</p><h3><a name="download&#95;the&#95;data"></a>Download the data</h3><p>The IRS data I'll use for the examples contains selected income and tax items classified by state, ZIP code, and income classes. It's 100MB in size and should be downloaded from <a href='http://www.irs.gov/pub/irs-soi/12zpallagi.csv'>http://www.irs.gov/pub/irs-soi/12zpallagi.csv</a> to the example code's <code>data</code> directory. Since the file contains the IRS <em>Statistics of Income</em> we've renamed the file to "soi.csv" for the examples.</p><p>If you're running *nix or OS X, there's a little shell script in the project which will download and rename the data for you. Run it on the command line within the project's directory like this:</p><pre><code class="sh">script/download-data.sh
-</code></pre><p>Alternatively, if you're on Windows or would prefer to follow manual instructions:<ul><li>Download <code>12zpallagi.csv</code> into the sample code's <code>data</code> directory using the link above</li><li>Rename the file <code>12zpallagi.csv</code> to <code>soi.csv</code></li></ul><h3><a name="running&#95;the&#95;examples"></a>Running the examples</h3></p><p>The example project contains a namespace called <code>cljds.ch5.examples</code>. Each example below is a function in this namespace that you can run in one of two ways: either from the REPL or on the command line, with Leiningen. If you'd like to run the examples in the REPL execute:</p><pre><code class="sh">lein repl
-</code></pre><p>on the command line. By default the REPL will open in the examples namespace and you can type the code you want to evaluate.</p><p>Alternatively, to run a specific numbered example you can execute:</p><pre><code class="sh">lein run –-example 5.1
-</code></pre><p>or the pass the single-letter equivalent:</p><pre><code class="sh">lein run –e 5.1
-</code></pre><p>This will run the function named <code>ex-5-1</code>. <strong>If you've followed the instructions above to download the data</strong>, you should now be able to run the examples.</p><h3><a name="inspect&#95;the&#95;data"></a>Inspect the data</h3><p>Take a look at the column headings in the first line of the file. One way to do this is to load the file into memory, split on newline characters, and take the first result. The Clojure core library function <code>slurp</code> will return the whole file as a string, <code>split</code> in the <code>clojure.string</code> namespace can chop the contents into lines based on the newline character, and first will return line 1:</p><pre><code class="clojure">&#40;require '&#91;clojure.string :as str&#93;&#41;
-
-&#40;defn ex-5-1 &#91;&#93;
-  &#40;-&gt; &#40;slurp &quot;data/soi.csv&quot;&#41;
-      &#40;str/split #&quot;\n&quot;&#41;
-      &#40;first&#41;&#41;&#41;
-</code></pre>    <br /><p>The file is around 100MB in size on disk. When loaded into memory and converted to object representations the data will occupy more space. This is incredibly wasteful when we're only interested in the first row.</p><p>Fortunately we don't have to load the whole file into memory if we take advantage of Clojure's lazy sequences. Instead of returning a string representation of the contents of the whole file, we could return a reference to the file and then step through it one line at a time:</p><pre><code class="clojure">&#40;require '&#91;clojure.java.io :as io&#93;&#41;
-
-&#40;defn ex-5-2 &#91;&#93;
-  &#40;-&gt; &#40;io/reader &quot;data/soi.csv&quot;&#41;
-      &#40;line-seq&#41;
-      &#40;first&#41;&#41;&#41;
-</code></pre><p>In the above code we're using <code>clojure.java.io/reader</code> to return a reference to the file and using the core function <code>line-seq</code> to return a lazy sequence of lines from the file. In this way we can read files even larger than available memory one line at a time.</p><p>The second approach is a much more efficient way of fetching the column headings. They're replicated below:</p><pre><code>&quot;STATEFIPS,STATE,zipcode,AGI&#95;STUB,N1,MARS1,MARS2,MARS4,PREP,N2,NUMDEP,A00100,N00200,A00200,N00300,A00300,N00600,A00600,N00650,A00650,N00900,A00900,SCHF,N01000,A01000,N01400,A01400,N01700,A01700,N02300,A02300,N02500,A02500,N03300,A03300,N00101,A00101,N04470,A04470,N18425,A18425,N18450,A18450,N18500,A18500,N18300,A18300,N19300,A19300,N19700,A19700,N04800,A04800,N07100,A07100,N07220,A07220,N07180,A07180,N07260,A07260,N59660,A59660,N59720,A59720,N11070,A11070,N09600,A09600,N06500,A06500,N10300,A10300,N11901,A11901,N11902,A11902&quot;
-</code></pre><p>This is a wide file! There are 77 columns overal,  so we won't identify them all. The key fields we'll be interested in are:</p><ul><li><strong>N1</strong>: The number of returns</li><li><strong>A00200</strong>: The salaries and wages amount</li><li><strong>A02300</strong>: The unemployment compensation amount</li></ul><p>If you're curious about what else is contained in the file, the IRS data definition document is available at <a href='http://www.irs.gov/pub/irs-soi/12zpdoc.doc'>http://www.irs.gov/pub/irs-soi/12zpdoc.doc</a>.</p><h3><a name="counting&#95;the&#95;records"></a>Counting the records</h3><p>Our file is certainly wide, but is it tall? Let's see how many rows there are in the file. Having created a lazy sequence this is a simple matter of counting the length of the sequence.</p><pre><code class="clojure"> &#40;defn ex-5-3 &#91;&#93;
-  &#40;-&gt; &#40;io/reader &quot;data/soi.csv&quot;&#41;
-      &#40;line-seq&#41;
-      &#40;count&#41;&#41;&#41;
-</code></pre><p>The above example returns 166,905 including the header row, so we know there are actually 166,904 rows in the file.</p><p>The function <code>count</code> is the simplest way to count the number of elements in a sequence. For vectors (and other types implementing the <code>Counted</code> interface) this is also the most efficient, since the collection already knows how many elements it contains and therefore doesn't need to recalculate it. For lazy sequences however, the only way to determine how many elements are contained in the sequence is to step through it from beginning to end.</p><p>Clojure's implementation of <code>count</code> is written in Java, but it can be pictured as a reduce over the sequence like this:</p><pre><code class="clojure">&#40;defn ex-5-4 &#91;&#93;
-  &#40;-&gt;&gt; &#40;io/reader &quot;data/soi.csv&quot;&#41;
-       &#40;line-seq&#41;
-       &#40;reduce &#40;fn &#91;i x&#93;
-                 &#40;inc i&#41;&#41; 0&#41;&#41;&#41;
-</code></pre><p>The function we pass to reduce above accepts a counter <code>i</code> and the next element from the sequence, <code>x</code>. For each <code>x</code> we simply increment the counter <code>i</code>. The <code>reduce</code> function accepts a 'initial value' of zero which represents the concept of 'nothing'. If there are no lines to reduce over, zero will be returned.</p><p>As of version 1.5, Clojure offers the Reducers library (<a href='http://clojure.org/reducers'>http://clojure.org/reducers</a>) which provides an alternative way of performing reductions that trades memory efficiency for speed.</p><h3><a name="the&#95;reducers&#95;library"></a>The reducers library</h3><p>The function we implemented above to count the records is a <em>sequential</em> algorithm. Each line is processed one-at-a-time until the sequence is exhausted. But there's nothing about the operation that demands it be done like this: we could split the number of lines into two sequences (ideally of roughly equal length) and reduce over each sequence independently. When we're done, we would just add together the total number of lines from each sequence together to get the grand total number of lines in the file.</p><p><img src="/img/parallel-reduce.png" alt="Parallel reduce" /></p><p>If each reduce ran on its own processing unit then the two count operations could be run in parallel. If we ignore the cost of splitting and recombining the sequences (which we can't, but it's often small compared to the work of the reduction itself), the algorithm could run twice as fast.</p><p>This is one of the aims of reducers: to bring the benefit of parallelism to algorithms implemented on a single machine by taking advantage of multiple cores.</p><h3><a name="parallel&#95;folds&#95;with&#95;reducers"></a>Parallel folds with reducers</h3><p>The parallel version of <code>reduce</code> implemented by the reducers library is called <code>fold</code>. To construct a fold, we have to supply a <em>combiner</em> function (in addition to the <em>reducer</em> function) that will take the results of our reduced sequences (the partial row counts) and return the grant total result. Since our row counts are numbers, the combiner function is simply <code>+</code>.</p><p>The previous example, adjusted to use <code>clojure.core.reducers</code> as <code>r</code>, looks like this:</p><pre><code class="clojure">&#40;require '&#91;clojure.core.reducers :as r&#93;&#41;
-
-&#40;defn ex-5-5 &#91;&#93;
-  &#40;-&gt;&gt; &#40;io/reader &quot;data/soi.csv&quot;&#41;
-       &#40;line-seq&#41;
-       &#40;r/fold + &#40;fn &#91;i x&#93;
-                   &#40;inc i&#41;&#41;&#41;&#41;&#41;
-</code></pre><p>The combiner function, <code>+</code>, has been included as the <strong>first</strong> argument to fold and our unchanged reduce function is supplied as the second argument. We no longer need to pass the initial value of zero: <code>fold</code> will get the initial value by calling the combiner function with no arguments. Our example above works because <code>+</code> called with no arguments already returns zero:</p><pre><code class="clojure">&#40;defn ex-5-6 &#91;&#93;
-  &#40;+&#41;&#41;
-
-;; 0
-</code></pre>To participate in folding then, it's important that the combiner function have two implementations: one with zero arguments that returns the identity value, and another with two arguments that 'combines' the arguments. Different folds will require different combiner functions and identity values of course. For example, the identity value for multiplication is 1.<p>We can visualize the process of seeding the computation with an identity value, iteratively reducing over the sequence of $xs$, and combining the reductions into an output value as a tree:</p><p><img src="/img/reductions-tree.png" alt="Reductions tree" /></p><p>There may be more than two reductions to combine, of course, and in fact the default implementation of <code>fold</code> will split the input collection into chunks of 512 elements. Our 166,000-element sequence will therefore generate 325 reductions to be combined. We're going to run out of page real estate quite quickly with a tree representation diagrams, so let's instead visualize the process more schematically: as a two-step <strong>reduce</strong> and <strong>combine</strong> process.</p><p>The first step performs a parallel reduce across all the chunks in the collection. The second step performs a serial reduce over the intermediate results to arrive at the final result:</p><p><img src="/img/reduce-combine.png" alt="Reduce-combine" /></p><p>The preceding diagram shows a reduce over a several sequences of $xs$ in parallel, represented as circles, into a series of outputs, represented as squares. The squares are then combined serially to produce the final result, represented by a star.</p><h3><a name="loading&#95;large&#95;files&#95;with&#95;iota"></a>Loading large files with Iota</h3><p>Calling <code>fold</code> on a lazy sequence requires Clojure to realize the sequence into memory, and then chunk the sequence into groups for parallel execution. For situations where the calculation performed on each row is small, the overhead involved in this coordination outweighs the benefit of parallelism. We can improve the situation slightly by using a library called Iota (<a href='https://github.com/thebusby/iota'>https://github.com/thebusby/iota</a>).</p><p>The Iota library loads files directly into data structures suitable for folding over with reducers and can handle files larger than available memory by making use of memory-mapped files. With Iota in place of our <code>line-seq</code> function our line count function becomes:</p><pre><code class="clojure">&#40;require 'iota&#41;
-
-&#40;defn ex-5-7 &#91;&#93;
-  &#40;-&gt;&gt; &#40;iota/seq &quot;data/soi.csv&quot;&#41;
-       &#40;r/fold + &#40;fn &#91;i x&#93;
-                   &#40;inc i&#41;&#41;&#41;&#41;&#41;
-</code></pre><p>So far we've just been working with sequences of unformatted lines, but if we're going to do anything more than count the rows we'll want to parse them into a more useful data structure. This is another area Clojure's reducers can help make our code more efficient.</p><h3><a name="create&#95;a&#95;reducers&#95;processing&#95;pipeline"></a>Create a reducers processing pipeline</h3><p>We already know (from the header row) that the file is comma-separated, so let's first create a function to turn each row into a vector of fields. All fields but the first two contain numeric data, so let's parse them into doubles while we're at it:</p><pre><code class="clojure">&#40;defn parse-double &#91;x&#93;
-  &#40;Double/parseDouble x&#41;&#41;
-
-&#40;defn parse-line &#91;line&#93;
-  &#40;let &#91;&#91;text-fields double-fields&#93; &#40;-&gt;&gt; &#40;str/split line #&quot;,&quot;&#41;
-                                         &#40;split-at 2&#41;&#41;&#93;
-    &#40;concat text-fields
-            &#40;map parse-double double-fields&#41;&#41;&#41;&#41;
-</code></pre><p>We'll use the reducers version of <code>map</code> to apply our <code>parse-line</code> function to each of the lines from the file in turn:</p><pre><code class="clojure">&#40;defn ex-5-8 &#91;&#93;
-   &#40;-&gt;&gt; &#40;iota/seq &quot;data/soi.csv&quot;&#41;
-        &#40;r/drop 1&#41;
-        &#40;r/map parse-line&#41;
-        &#40;r/take 1&#41;
-        &#40;into &#91;&#93;&#41;&#41;&#41;
-
-;; &#91;&#40;&quot;01&quot; &quot;AL&quot; 0.0 1.0 889920.0 490850.0 ...&#41;&#93;
-</code></pre><p>The final <code>into</code> converts the reducers' internal representation (a <em>reducible collection</em>) into a Clojure vector. The previous example should return a sequence of 77 elements representing each column the first row of the file after the header.</p><p>We're just dropping the column names at the moment, but it would be great if we could make use of these to return a map representation of each record associating the column name with the field value. The keys of the map would be the column headings and the values would be the parsed fields. The core library function <code>zipmap</code> will create a map out of two sequences: one for the keys and another for the values:</p><pre><code class="clojure">&#40;defn parse-columns &#91;line&#93;
-  &#40;-&gt;&gt; &#40;str/split line #&quot;,&quot;&#41;
-       &#40;map keyword&#41;&#41;&#41;
-
-&#40;defn ex-5-9 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;
-        column-names &#40;parse-columns &#40;first data&#41;&#41;&#93;
-    &#40;-&gt;&gt; &#40;r/drop 1 data&#41;
-         &#40;r/map parse-line&#41;
-         &#40;r/map &#40;fn &#91;fields&#93;
-                  &#40;zipmap column-names fields&#41;&#41;&#41;
-         &#40;r/take 1&#41;
-         &#40;into &#91;&#93;&#41;&#41;&#41;&#41;
-</code></pre>This function returns a map representation of each row, a much more user-friendly data structure:<pre><code class="clojure">&#91;{:N2 1505430.0, :A19300 181519.0, :MARS4 256900.0 ...}&#93;
-</code></pre><p>A great thing about Clojure's reducers is that in the above computation calls to <code>r/map</code>, <code>r/drop</code> and <code>r/take</code> are compiled into a <em>reduction</em> that's performed in a single iteration over the data. This becomes particularly valuable as the number of operations increases.</p><p>For example, let's assume we'd also like to filter out zero ZIP codes. We could extend the reducers pipeline like this:</p><pre><code class="clojure">&#40;defn ex-5-10 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;
-        column-names &#40;parse-columns &#40;first data&#41;&#41;&#93;
-    &#40;-&gt;&gt; &#40;r/drop 1 data&#41;
-         &#40;r/map parse-line&#41;
-         &#40;r/map &#40;fn &#91;fields&#93;
-                  &#40;zipmap column-names fields&#41;&#41;&#41;
-         &#40;r/remove &#40;fn &#91;record&#93;
-                     &#40;zero? &#40;:zipcode record&#41;&#41;&#41;&#41;
-         &#40;r/take 1&#41;
-         &#40;into &#91;&#93;&#41;&#41;&#41;&#41;
-</code></pre><p>The <code>r/remove</code> step is now also being run together with the <code>r/map</code>, <code>r/drop</code> and <code>r/take</code> calls. As the size of data increases it becomes increasingly important to avoid making multiple iterations over the data unnecessarily. Using Clojure's reducers ensures that our calculations are compiled into just a single iteration.</p><h3><a name="curried&#95;reductions&#95;with&#95;reducers"></a>Curried reductions with reducers</h3><p>To make it clearer to see what's going on we can create a <em>curried</em> version of each of our above steps: to parse the lines, create a record from the fields, and filter zero ZIP codes. The curried version of the function is a reduction <em>"waiting for a collection"</em>:</p><pre><code class="clojure">&#40;def line-formatter
-  &#40;r/map parse-line&#41;&#41;
-
-&#40;defn record-formatter &#91;column-names&#93;
-  &#40;r/map &#40;fn &#91;fields&#93;
-           &#40;zipmap column-names fields&#41;&#41;&#41;&#41;
-
-&#40;def remove-zero-zip
-  &#40;r/remove &#40;fn &#91;record&#93;
-              &#40;zero? &#40;:zipcode record&#41;&#41;&#41;&#41;&#41;
-</code></pre><p>In each case we're calling one of reducers' functions but without providing a collection to reduce over. The result is a function that can be applied to the collection at a later time, or composed together into a single <code>parse-file</code> function using <code>comp</code>:</p><pre><code class="clojure">&#40;defn load-data &#91;file&#93;
-  &#40;let &#91;data &#40;iota/seq file&#41;
-        column-names  &#40;parse-columns &#40;first data&#41;&#41;
-        parse-file &#40;comp remove-zero-zip
-                         &#40;record-formatter column-names&#41;
-                         line-formatter&#41;&#93;
-    &#40;parse-file &#40;rest data&#41;&#41;&#41;&#41;
-</code></pre><p>It's only when the <code>parse-file</code> function is called with a sequence, as in the last line of the preceding example, that the pipeline is actually executed.</p><h3><a name="statistical&#95;folds&#95;with&#95;reducers"></a>Statistical folds with reducers</h3><p>With the data parsed it's time to perform some descriptive statistics. Let's assume we'd like to know the average <em>number of returns</em> (column N1) submitted to the IRS by ZIP code. One way of doing this is to add up the values and divide by the count. Our first attempt might look like this:</p><pre><code class="clojure">&#40;defn ex-5-11 &#91;&#93;
-  &#40;let &#91;data &#40;load-data &quot;data/soi.csv&quot;&#41;
-        xs &#40;into &#91;&#93; &#40;r/map :N1 data&#41;&#41;&#93;
-    &#40;/ &#40;reduce + xs&#41;
-       &#40;count xs&#41;&#41;&#41;&#41;
-
-;; 853.37
-</code></pre><p>While this works, it's comparatively slow. We iterate over the data once to create the <code>xs</code>, a second time to calculate the sum using <code>reduce</code> and a third time to calculate the <code>count</code>. The bigger our dataset gets, the larger the time penalty we'll pay for this repetition.</p><p>Ideally, we'd be able to calculate the mean value in a single iteration over the data, just like our <code>parse-file</code> function above (even better if we can perform it in parallel, too).</p><h3><a name="associativity"></a>Associativity</h3><p>Before we proceed, it's useful to take a moment to reflect on why the following code wouldn't do what we want:</p><pre><code class="clojure">&#40;defn mean
-  &#40;&#91;&#93; 0&#41;
-  &#40;&#91;x y&#93; &#40;/ &#40;+ x y&#41; 2&#41;&#41;&#41;
-</code></pre><br /><p>The <code>mean</code> function we've just defined is a function of two arities. This means that it has two different implementations and which is actually called depends on the number of arguments provided when the function is called. Without any arguments it returns 0 (the identity for the mean computation) and with two arguments it returns their mean.</p><pre><code class="clojure">&#40;defn ex-5-12 &#91;&#93;
-  &#40;-&gt;&gt; &#40;load-data &quot;data/soi.csv&quot;&#41;
-       &#40;r/map :N1&#41;
-       &#40;r/fold mean&#41;&#41;&#41;
-
-;; 930.54
-</code></pre>We obtained a mean of 853.37 previously. The example above folds over the data in column N1 with our <code>mean</code> function and produces a different result. Which is correct?<p>Well, if we could expand out the computation in the preceding example for the first three <code>xs</code>, we might see something like the following:</p><pre><code class="clojure">&#40;mean &#40;mean &#40;mean 0 a&#41; b&#41; c&#41;
-</code></pre><p>This isn't the calculation we want to perform. In essence, each time we call <code>mean</code> with the results of a previous <code>mean</code>, we're taking "an average of an average". Technically speaking this is a bad idea because the mean function is not <em>associative</em>. For an associative function, the following equality holds true:</p><p>$$ f(f(a,b),c)=f(a,f(b,c)) $$</p><p>Addition and subtraction are associative but multiplication and division are not, so the <code>mean</code> function is not associative either. Contrast the <code>mean</code> function usage with the following using <code>+</code>:</p><pre><code class="clojure">&#40;+ 1 &#40;+ 2 3&#41;&#41;
-</code></pre><p>which yields an identical result to:</p><pre><code class="clojure">&#40;+ &#40;+ 1 2&#41; 3&#41;
-</code></pre><p>It doesn't matter how we group the sub-calculations with <code>+</code> because addition is associative. Associativity is an important property of functions used with <code>fold</code> because, by definition, the results of a previous calculation are treated as inputs to the next.</p><p>The easiest way to calculate the mean in an associative way is to calculate the sum and the count separately. Since both the sum and the count can be calculated with <code>+</code>, they're associative and can be calculated in parallel over the data with <code>fold</code>.</p><p>The mean can then be calculated as the very last step simply by dividing one by the other.</p><h3><a name="calculating&#95;the&#95;mean&#95;using&#95;fold"></a>Calculating the mean using fold</h3><p>We'll create a fold to calculate the mean with two custom functions, <code>mean-combiner</code> and <code>mean-reducer</code>. This requires defining three entities:</p><ul><li>The identity value for the fold</li><li>The reducer function</li><li>The combiner function</li></ul><p>We discovered the benefits of associativity in the previous section, and so we'll want to update our intermediate mean using only associative operations by calculating the sum and the count separately. One way of representing the two values is a map of two keys, the <code>:sum</code> and the <code>:count</code>. The value that represents the identity for our mean would be a sum of zero and a count of zero, or a map such as the following: <code>{:sum 0 :count 0}</code>.</p><p>The combine function, <code>mean-combiner</code>, returns the identity value when it's called without arguments. The two-argument combiner needs to add together the <code>:count</code> and the <code>:sum</code> for each of the two arguments. We can achieve this by merging the maps with <code>+</code>:</p><pre><code class="clojure">&#40;defn mean-combiner
-  &#40;&#91;&#93; {:count 0 :sum 0}&#41;
-  &#40;&#91;a b&#93; &#40;merge-with + a b&#41;&#41;&#41;
-</code></pre><br /><p>The <code>mean-reducer</code> function needs to accept an accumulated value (either an identity value or the results of a previous reduction) and incorporate the new <code>x</code>. We do this simply by incrementing the <code>count</code> and adding <code>x</code> to the accumulated <code>sum</code>:</p><pre><code class="clojure">&#40;defn mean-reducer &#91;acc x&#93;
-  &#40;-&gt; acc
-      &#40;update-in &#91;:count&#93; inc&#41;
-      &#40;update-in &#91;:sum&#93; + x&#41;&#41;&#41;
-</code></pre><p>The two functions above are almost enough to completely specify our mean fold:</p><pre><code class="clojure">&#40;defn ex-5-13 &#91;&#93;
-  &#40;-&gt;&gt; &#40;load-data &quot;data/soi.csv&quot;&#41;
-       &#40;r/map :N1&#41;
-       &#40;r/fold mean-combiner
-               mean-reducer&#41;&#41;&#41;
-
-;; {:count 166598, :sum 1.4216975E8}
-</code></pre><p>The result gives us the two numbers from which we can calculate the mean of N1, calculated in only one iteration over the data. The final step of the calculation can be performed with the following <code>mean-post-combiner</code> function:</p><pre><code class="clojure">&#40;defn mean-post-combiner &#91;{:keys &#91;count sum&#93;}&#93;
-  &#40;if &#40;zero? count&#41; 0 &#40;/ sum count&#41;&#41;&#41;
-
-&#40;defn ex-5-14 &#91;&#93;
-  &#40;-&gt;&gt; &#40;load-data &quot;data/soi.csv&quot;&#41;
-       &#40;r/map :N1&#41;
-       &#40;r/fold mean-combiner
-               mean-reducer&#41;
-       &#40;mean-post-combiner&#41;&#41;&#41;
-
-;; 853.37
-</code></pre>Fortunately, the values agree with the mean we calculated correctly before.<h3><a name="calculating&#95;the&#95;variance&#95;using&#95;fold"></a>Calculating the variance using fold</h3><p>Next let's examine a more complicated statistic: the variance, or $ S ^2 $. The variance measures the "spread" of values about a middle value and is defined as the <em>mean squared difference from the mean</em>:</p><p>$$ S ^2 = {1 \over n} \sum\limits&#95;{i=1} ^n (x_i - \bar x) ^2 $$</p><p>where $ \bar x $ refers to the mean value of $ x $.</p><p>To implement this as a fold we might write something like this:</p><pre><code class="clojure">&#40;defn ex-5-15 &#91;&#93;
-   &#40;let &#91;data &#40;-&gt;&gt; &#40;load-data &quot;data/soi.csv&quot;&#41;
-                   &#40;r/map :N1&#41;&#41;
-         mean-x &#40;-&gt;&gt; data
-                     &#40;r/fold mean-combiner
-                             mean-reducer&#41;
-                     &#40;mean-post-combine&#41;&#41;
-         sq-diff &#40;fn &#91;x&#93; &#40;i/pow &#40;- x mean-x&#41; 2&#41;&#41;&#93;
-     &#40;-&gt;&gt; data
-          &#40;r/map sq-diff&#41;
-          &#40;r/fold mean-combiner
-                  mean-reducer&#41;
-          &#40;mean-post-combine&#41;&#41;&#41;&#41;
-
-;; 3144836.86
-</code></pre><p>First, we calculate the mean of the series using the <code>fold</code> we constructed just now. Then we define a function of <code>x</code>, <code>sq-diff</code>, which calculates the squared difference of <code>x</code> from the mean. We map this over the squared differences and call our mean fold a second time to arrive at the final variance result.</p><p>Thus, we make <em>two</em> complete iterations over the data: firstly to calculate the mean, and secondly to calculate the difference of each <code>x</code> from the mean. It might seem that it's impossible to reduce the number of steps further and calculate the variance in only a single fold over the data. In fact, it <strong>is</strong> possible to express the variance calculation as a single fold. To do so, we need to keep track of three things: the count, the interim mean, and the sum of squared differences.</p><pre><code class="clojure">&#40;defn variance-combiner
-  &#40;&#91;&#93; {:count 0 :mean 0 :sum-of-squares 0}&#41;
-  &#40;&#91;a b&#93;
-   &#40;let &#91;count &#40;+ &#40;:count a&#41; &#40;:count b&#41;&#41;&#93;
-     {:count count
-      :mean &#40;/ &#40;+ &#40;&#42; &#40;:count a&#41; &#40;:mean a&#41;&#41;
-                  &#40;&#42; &#40;:count b&#41; &#40;:mean b&#41;&#41;&#41; 
-               count&#41;
-      :sum-of-squares &#40;+ &#40;:sum-of-squares a&#41;
-                         &#40;:sum-of-squares b&#41;
-                         &#40;/ &#40;&#42; &#40;- &#40;:mean b&#41;
-                                  &#40;:mean a&#41;&#41;
-                               &#40;- &#40;:mean b&#41;
-                                  &#40;:mean a&#41;&#41;
-                               &#40;:count a&#41;
-                               &#40;:count b&#41;&#41;
-                            count&#41;&#41;}&#41;&#41;&#41;
-
-</code></pre><p>The <code>variance-combiner</code> function is shown above. Its identity value is a map with all three values set to zero. The zero-arity implementation just returns this value.</p><p>The two-arity combiner needs to combine the <code>:count</code>, <code>:mean</code> and <code>:sums-of-squares</code> for both of the supplied values. Combining the counts is easy: we simply add them together. Combining the means is only marginally trickier: we need to calculate the weighted mean of the two means. If one mean is based on fewer records then this should count for less in the combined mean:</p><p>$$ \mu_{a,b} = {\mu&#95;a n&#95;a + \mu&#95;b n&#95;b \over n&#95;a + n&#95;b} $$</p><p>Combining the sums of squares is the most complicated calculation of all: as well as adding the sums of squares we also need to add a factor to account for the fact that the sum of squares from $a$ and $b$ were likely calculated from differing means.</p><p>The <code>variance-reducer</code> function is much simpler, and contains the explanation for how the variance fold is able to calculate the variance in one iteration over the data:</p><pre><code class="clojure">&#40;defn variance-reducer &#91;{:keys &#91;count mean sum-of-squares&#93;} x&#93;
-  &#40;let &#91;count' &#40;inc count&#41;
-        mean'  &#40;+ mean &#40;/ &#40;- x mean&#41; count'&#41;&#41;&#93;
-    {:count count'
-     :mean mean'
-     :sum-of-squares &#40;+ sum-of-squares
-                        &#40;&#42; &#40;- x mean'&#41; &#40;- x mean&#41;&#41;&#41;}&#41;&#41;
-</code></pre><p>For each new record, the interim mean <code>mean'</code> is re-calculated from the previous interim <code>mean</code> and current <code>count</code>. We add to the sum of squares the product of the difference between the means <em>before</em> and <em>after</em> taking account of this new record.</p><p>The final result is a map containing the count, the mean and the total sum of squares. As the variance is just the sum of squared differences divided by the count, our <code>variance-post-combiner</code> function is a relatively simple one:</p><pre><code class="clojure">&#40;defn variance-post-combiner &#91;{:keys &#91;count mean sum-of-squares&#93;}&#93;
-   &#40;if &#40;zero? count&#41; 0 &#40;/ sum-of-squares count&#41;&#41;&#41;
-</code></pre><p>Putting the three functions together yields the following:</p><pre><code class="clojure">&#40;defn ex-5-16 &#91;&#93;
-  &#40;-&gt;&gt; &#40;load-data &quot;data/soi.csv&quot;&#41;
-       &#40;r/map :N1&#41;
-       &#40;r/fold variance-combiner
-               variance-reducer&#41;
-       &#40;variance-post-combiner&#41;&#41;&#41;
-
-;; 3144836.86
-</code></pre><p>Thus, we have been able to calculate the variance in only a <strong>single iteration</strong> over our dataset.</p><h3><a name="mathematical&#95;folds&#95;with&#95;tesser"></a>Mathematical folds with Tesser</h3><p>We should now understand how to use folds to calculate parallel implementations of simple algorithms. Hopefully, we should also have some appreciation for the ingenuity required to find efficient solutions that will perform the minimum number of iterations over the data too!</p><p>Fortunately the library Tesser (<a href='https://github.com/aphyr/tesser'>https://github.com/aphyr/tesser</a>) includes implementations for common mathematical folds including the mean and the variance. To see how to use Tesser, let's consider the covariance of two fields from the IRS dataset: the <em>"salaries and wages"</em> (A00200) the <em>"unemployment compensation"</em> (A02300) amounts.</p><h3><a name="calculating&#95;covariance&#95;with&#95;tesser"></a>Calculating covariance with Tesser</h3><p>If two variables $ x $ and $ y $ tend to vary together, their deviations from the mean tend to have the same sign; negative if they're less than the mean, positive if they're above. If we multiply the deviations from the mean together, the product is positive when they have the same sign and negative when they have different signs. Taking the mean of these products gives a measure of the <strong>tendency of the two variables to deviate from the mean in the same direction</strong> for each given sample. This is referred to as their <em>covariance</em>.</p><p>The formula is shown below:</p><p>$$ {\rm cov(X,Y)} = {1 \over n} \sum\limits&#95;{i=1} ^n (x&#95;i - \bar x) (y&#95;i - \bar y) $$</p><p>A covariance fold is included in <code>tesser.math</code>. Below, we're including <code>tesser.math</code> as <code>m</code> and <code>tesser.core</code> as <code>t</code>.</p><pre><code class="clojure">&#40;require '&#91;tesser.core :as t&#93;
-         '&#91;tesser.math :as m&#93;&#41;
-
-&#40;defn ex-5-17 &#91;&#93;
-  &#40;let &#91;data &#40;into &#91;&#93; &#40;load-data &quot;data/soi.csv&quot;&#41;&#41;&#93;
-    &#40;-&gt;&gt; &#40;m/covariance :A02300 :A00200&#41;
-         &#40;t/tesser &#40;t/chunk 512 data &#41;&#41;&#41;&#41;&#41;
-
-;; 3.496E7
-</code></pre><p>The <code>m/covariance</code> function expects to receive two arguments: a function to return the $ x $ value and another to return the $y$ value from each input record. Since keywords will act as functions to extract their corresponding values from a map, we simply pass these in.</p><p>Tesser works in a similar way to Clojure's reducers but with some minor differences: reducers' <code>fold</code> takes care of splitting our data into subsequences for parallel execution. With Tesser however, we must divide our data into chunks explicitly. Since this's something we're going to do repeatedly, let's create a little helper function called <code>chunks</code>.</p><pre><code class="clojure">&#40;defn chunks &#91;coll&#93;
-  &#40;-&gt;&gt; &#40;into &#91;&#93; coll&#41;
-       &#40;t/chunk 1024&#41;&#41;&#41;
-</code></pre><p>For most of the rest of this article, we'll be using the <code>chunks</code> function to split our input data into groups of 1,024 records.</p><h3><a name="commutativity"></a>Commutativity</h3><p>Another difference between Clojure's reducers and Tesser's folds is that Tesser doesn't guarantee input order will be preserved. Along with being associative, functions provided to Tesser's folds must also be commutative. A commutative function is one whose result is the same result if its arguments are provided in a different order.</p><p>For example:</p><p>$$ f(a,b) = f(b,a) $$</p><p>Addition and multiplication are commutative, but subtraction and division are not. Commutativity is a useful property of functions intended for distributed data processing because it lowers the amount of coordination required between subtasks. When Tesser executes a combine function it is free to do so on whichever reducer functions return their values first. As order doesn't matter, Tesser doesn't need to wait for the first to complete.</p><p>Let's rewrite our <code>load-data</code> function into a <code>prepare-data</code> function that will return a commutative Tesser fold. It performs the same steps (parsing a line of the text file, formatting the record as a map and removing zero ZIP codes) that our previous reducers-based function did, but it no longer assumes that the column headers will be the first row in the file: 'first' is a concept which implicitly requires ordered data.</p><pre><code class="clojure">&#40;def column-names
-  &#91;:STATEFIPS :STATE :zipcode :AGI&#95;STUB :N1 :MARS1 :MARS2 ...&#93;&#41;
-
-&#40;defn prepare-data &#91;&#93;
-  &#40;-&gt;&gt; &#40;t/remove #&#40;.startsWith % &quot;STATEFIPS&quot;&#41;&#41;
-       &#40;t/map parse-line&#41;
-       &#40;t/map &#40;partial format-record column-names&#41;&#41;
-       &#40;t/remove  #&#40;zero? &#40;:zipcode %&#41;&#41;&#41;&#41;&#41;
-</code></pre><p>Now all the preparation is being done in Tesser, we can pass the <code>iota/seq</code> directly as input. This might not seem like a significant change, but it will be necessary if we are going to run our analysis on Hadoop, as shown in <a href='https://www.packtpub.com/big-data-and-business-intelligence/clojure-data-science'>Chapter 5, Clojure for Data Science</a>.</p><pre><code class="clojure">&#40;defn ex-5-18 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;&#93;
-    &#40;-&gt;&gt; &#40;prepare-data&#41;
-         &#40;m/covariance :A02300 :A00200&#41;
-         &#40;t/tesser &#40;chunks data&#41;&#41;&#41;&#41;&#41;
-
-;; 3.496E7
-</code></pre><p>The result is the covariance of the <em>"salaries and wages"</em> (A02300) amount and the <em>"unemployment compensation"</em> (A00200) amounts, but it's a hard number to interpret: the units are the product of the units of the inputs.</p><p>Because of this, covariance is rarely reported as a summary statistic on its own. A solution to make the number more comprehensible is to divide the deviations by the product of the standard deviations. This transforms the units to be standard scores and constrains the output to a number between -1 and +1 inclusive. The result is called <em>Pearson's correlation</em> or the correlation coefficient, often denoted $r$.</p><p>$$ r = {{\rm cov}(x, y) \over \sigma&#95;x \sigma&#95;y } $$</p><p>As the standard deviation is simply the square root of the variance, we've already covered all the necessary math to calculate the correlation coefficient using Tesser's folds. However, Tesser also includes a built-in function, <code>m/correlation</code>, for calculating the correlation coefficient:</p><pre><code class="clojure">&#40;defn ex-5-19 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;&#93;
-    &#40;-&gt;&gt; &#40;prepare-data&#41;
-         &#40;m/correlation :A02300 :A00200&#41;
-         &#40;t/tesser &#40;chunks data&#41;&#41;&#41;&#41;&#41;
-
-;; 0.353
-</code></pre><p>There's a modest, positive, correlation between these two variables. Whilst it may be useful to know that two variables are correlated, we can't use this information alone to make predictions. In establishing a correlation we have measured the <strong>strength</strong> and <strong>sign</strong> of a relationship, but not the <strong>slope</strong>, and knowing the expected rate of change for one variable given a unit change in the other is required to make predictions. What we'd like to determine is an equation that relates the specific value of one variable, called the <em>independent</em> variable, to the expected value of the other, the <em>dependent</em> variable.</p><h3><a name="the&#95;linear&#95;equation"></a>The linear equation</h3><p>Two variables, which we can signify as $x$ and $y$, may be related to each other exactly or inexactly. The simplest such relationship, between an independent variable labelled $x$ and a dependent variable labelled $y$, is a straight line expressed in the formula:</p><p>$$ y = a + bx $$</p><p>Where the values of the parameters a and b determine respectively the precise height and steepness of the line, $a$ is referred to as the <em>intercept</em> or <em>constant</em> and $b$ as the <em>gradient</em> or <em>slope</em>. For example, in the mapping between Celsius and Fahrenheit temperature scales $a=32$ and $b=1.8$. Substituting these values of $a$ and $b$ into our equation yields:</p><p>$$ y = 32 + 1.8x $$</p><p>To calculate 10º Celsius in Fahrenheit, we substitute 10 for $x$:</p><p>$$ y = 32 + 1.8(10) = 50 $$</p><p>Thus our equation has told us that 10º Celsius is 50º Fahrenheit, which is indeed the case. </p><h3><a name="simple&#95;linear&#95;regression&#95;with&#95;tesser"></a>Simple linear regression with Tesser</h3><p>Tesser doesn't currently provide a linear regression fold, but it does give us the tools we need to implement one. The coefficients for simple linear regression model—the slope and the intercept—can be calculated as a simple function of the variance, covariance and means of the two inputs:</p><p>$$ b= {\rm cov(X,Y) \over var(X) }$$</p><p>$$ a= \bar y - b \bar x $$</p><p>The slope $b$ is the covariance of $x$ and $y$ divided by the variance in $x$. The intercept is the value that ensures the regression line passes through the means of both series. Ideally, we'd be able to calculate each of these four variables in a single fold over the data. Tesser provides two fold combinators, <code>t/fuse</code> and <code>t/facet</code>, for building more sophisticated folds out of more basic folds.</p><h3><a name="tesser's&#95;fuse&#95;combinator"></a>Tesser's fuse combinator</h3><p>Where we have <strong>multiple folds to run in parallel</strong>, we should use <code>t/fuse</code>. For example, in the below example we're fusing the <code>m/mean</code> and the <code>m/standard-deviation</code> folds into a single one that will calculate both values at once:</p><pre><code class="clojure">&#40;defn ex-5-20 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;&#93;
-    &#40;-&gt;&gt; &#40;prepare-data&#41;
-         &#40;t/map :A00200&#41;
-         &#40;t/fuse {:A00200-mean &#40;m/mean&#41;
-                  :A00200-sd   &#40;m/standard-deviation&#41;}&#41;
-         &#40;t/tesser &#40;chunks data&#41;&#41;&#41;&#41;&#41;
-
-;; {:A00200-sd 89965.99846545042, :A00200-mean 37290.58880658831}
-</code></pre><h3><a name="tesser's&#95;facet&#95;combinator"></a>Tesser's facet combinator</h3><p>Conversely, when we have the <strong>same</strong> fold to run on <strong>all the fields</strong> in the map, we should use <code>t/facet</code>:</p><pre><code class="clojure">&#40;defn ex-5-21 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;&#93;
-    &#40;-&gt;&gt; &#40;prepare-data&#41;
-         &#40;t/map #&#40;select-keys % &#91;:A00200 :A02300&#93;&#41;&#41;
-         &#40;t/facet&#41;
-         &#40;m/mean&#41;
-         &#40;t/tesser &#40;chunks data&#41;&#41;&#41;&#41;&#41;
-
-;; {:A02300 419.67862159209596, :A00200 37290.58880658831}
-</code></pre>In the above code we use <code>select-keys</code> to fetch only two values from the record (A00200 and A02300) and calculate the mean value for both of them simultaneously.<h3><a name="linear&#95;regression&#95;with&#95;fuse"></a>Linear regression with fuse</h3><p>Let's return to the challenge of performing simple linear regression. We have four numbers to calculate so let's fuse them together:</p><pre><code class="clojure">&#40;defn calculate-coefficients &#91;{:keys &#91;covariance variance-x
-                                      mean-x mean-y&#93;}&#93;
-  &#40;let &#91;slope     &#40;/ covariance variance-x&#41;
-        intercept &#40;- mean-y &#40;&#42; mean-x slope&#41;&#41;&#93;
-    &#91;intercept slope&#93;&#41;&#41;
-
- &#40;defn ex-5-22 &#91;&#93;
-  &#40;let &#91;data &#40;iota/seq &quot;data/soi.csv&quot;&#41;
-        fx :A00200
-        fy :A02300&#93;
-    &#40;-&gt;&gt; &#40;prepare-data&#41;
-         &#40;t/fuse {:covariance &#40;m/covariance fx fy&#41;
-                  :variance-x &#40;m/variance &#40;t/map fx&#41;&#41;
-                  :mean-x &#40;m/mean &#40;t/map fx&#41;&#41;
-                  :mean-y &#40;m/mean &#40;t/map fx&#41;&#41;}&#41;
-         &#40;t/post-combine calculate-coefficients&#41;
-         &#40;t/tesser &#40;chunks data&#41;&#41;&#41;&#41;&#41;
-
-;; &#91;37129.529236553506 0.0043190406799462925&#93;
-</code></pre><p><code>fuse</code> very succinctly binds together the calculations we want to perform. In addition, Tesser allows us to specify a <code>post-combine</code> step to be included as part of the fold rather than handing the result off to another function to finalize the output. The <code>post-combine</code> step receives the four results in a map and calculates the slope and intercept from them, returning the two coefficients as a vector.</p><h3><a name="making&#95;predictions"></a>Making predictions</h3><p>Having calculated the coefficients in the previous section, we simply have to substitute them into the linear model previously described to make predictions about our dependent variable given our independent variable:</p><p>$$ a=37129.52 $$</p><p>$$ b=0.0043 $$</p><p>$$ y = 37129.52+0.0043x $$</p><p>This equation provides us with a way to determine the value of our dependent variable, <em>"unemployment compensation"</em>, given our independent variable <em>"salaries and wages"</em> amount.</p><h2><a name="summary"></a>Summary</h2><p>In this article we've seen how to use Iota and Clojure's reducers together for folding over large quantities of data. We've also seen how the Tesser library implements a suite of mathematical functions as folds that operate in parallel and require only a single iteration over the dataset.</p><p>We've also learned about how to determine whether two variables share a linear correlation, and how to build a simple linear model with one independent variable. We learned the optimal parameters to the model by using Tesser to fuse together several calculations into one.</p><p>I hope you've found this article useful. In <a href='https://www.packtpub.com/big-data-and-business-intelligence/clojure-data-science'>Clojure for Data Science</a>, we also cover how to tell whether the parameters we've learned are a good fit for the data, and how to increase the number of parameters to our model to enable more accurate prediction as well as how to use both Tesser and Parkour libraries to scale our analysis to very large, distributed datasets with Hadoop.</p>
+    <p><a href='https://twitter.com/henrygarner'>Henry</a> spoke at <a href='https://skillsmatter.com/conferences/6861-clojure-exchange-2015#program'>Clojure eXchange 2015</a> on the subject of parallel folds using Clojure's transducers.</p><p><blockquote><p> Sharing experience gained from his work on a mission-critical data product earlier this year, Henry will speak about some newer features of Clojure that enable data scientists to write concise, expressive and performant data processing code. He’ll explore transducers and reducing functions, and show how simple functional combinators can make even sophisticated analytical code both faster and easier to comprehend. </p></blockquote></p><p>The key takeaway is that with transducers, reducing functions must now provide an arity-1 <strong>completer</strong> implementation which provides them with the opportunity to convert an accumulated value into a final output. Together with the (optional) arity-0 <strong>initializer</strong> this provides reducing functions the ability to wrap arbitrarily intricate state. The natural composability of transducers can be mirrored with similarly composable step functions to build up sophisticated parallel computations.</p><p>You can see a <a href='https://skillsmatter.com/skillscasts/7243-expressive-parallel-analytics-with-clojure'>video of the talk</a> on Skills Matter's website, the <a href='https://github.com/henrygarner/cljx-december-2015'>org-mode slides</a>, or a PDF of the presentation below.</p><p><script async class="speakerdeck-embed" data-id="9945344f8783426d8e5fdffc90d5d818" data-ratio="1.37081659973226" src="//speakerdeck.com/assets/embed.js"></script></p>
 </div>
 
 <div id="post-tags">
@@ -340,13 +74,13 @@
     
     <a href="/tags/clojure.html">clojure</a>
     
-    <a href="/tags/tesser.html">tesser</a>
+    <a href="/tags/data science.html">data science</a>
     
     <a href="/tags/statistics.html">statistics</a>
     
-    <a href="/tags/linear regression.html">linear regression</a>
+    <a href="/tags/transducers.html">transducers</a>
     
-    <a href="/tags/big data.html">big data</a>
+    <a href="/tags/talks.html">talks</a>
     
 </div>
 
@@ -356,7 +90,7 @@
     <div id="prev-next">
         
         
-        <a class="right" href="/posts/2015-09-05-regression-classification-clustering-clojure.html">Clojure for Data Science: an Overview &raquo;</a>
+        <a class="right" href="/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html">Parallel Folds: Reducers, Tesser and Linear Regression &raquo;</a>
         
     </div>
 </div>
@@ -380,11 +114,11 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/posts/2015-12-05-expressive-parallel-analytics-with-clojure.html">Expressive Parallel Analytics with Clojure</a></li>
+                        
                         <li><a href="/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html">Parallel Folds: Reducers, Tesser and Linear Regression</a></li>
                         
                         <li><a href="/posts/2015-09-05-regression-classification-clustering-clojure.html">Clojure for Data Science: an Overview</a></li>
-                        
-                        <li><a href="/posts/2015-09-05-published.html">Published!</a></li>
                         
                     </ul>
                 </div>
@@ -417,6 +151,8 @@
                         <li><a href="/tags/big data.html">big data</a></li>
                         
                         <li><a href="/tags/clustering.html">clustering</a></li>
+                        
+                        <li><a href="/tags/transducers.html">transducers</a></li>
                         
                         <li><a href="/tags/correlation.html">correlation</a></li>
                         
