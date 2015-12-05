@@ -9,3 +9,4 @@ The talk was in two parts, each around an hour, and in each I attempted to give 
 <script async class="speakerdeck-embed" data-id="324a4d25b6d541dbadd9e0fb14dc1a51" data-ratio="1.37081659973226" src="//speakerdeck.com/assets/embed.js"></script>
 
 The content of the slides is available at [https://github.com/henrygarner/clojure-data-science](https://github.com/henrygarner/clojure-data-science).
+x
