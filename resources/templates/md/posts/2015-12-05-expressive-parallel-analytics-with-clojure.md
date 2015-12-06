@@ -4,6 +4,8 @@
 
 [Henry](https://twitter.com/henrygarner) spoke at [Clojure eXchange 2015](https://skillsmatter.com/conferences/6861-clojure-exchange-2015#program) on the subject of parallel folds using Clojure's transducers.
 
+From the programme:
+
 <blockquote><p>
 Sharing experience gained from his work on a mission-critical data product earlier this year, Henry will speak about some newer features of Clojure that enable data scientists to write concise, expressive and performant data processing code. He’ll explore transducers and reducing functions, and show how simple functional combinators can make even sophisticated analytical code both faster and easier to comprehend.
 </p></blockquote>
