@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Clojure for Data Science: Expressive Parallel Analytics with Clojure</title>
+    <title>Clojure for Data Science: Data Science Up and Down the Ladder of Abstraction</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400italic,700italic,400,700' rel='stylesheet'
           type='text/css'>
@@ -57,40 +57,32 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">05 December 2015</div>
+        <div class="col-lg-6">02 December 2016</div>
         
     </div>
-    <h2>Expressive Parallel Analytics with Clojure</h2>
+    <h2>Data Science Up and Down the Ladder of Abstraction</h2>
 </div>
 <div>
     
-    <p><a href='https://twitter.com/henrygarner'>Henry</a> spoke at <a href='https://skillsmatter.com/conferences/6861-clojure-exchange-2015#program'>Clojure eXchange 2015</a> on the subject of parallel folds using Clojure's transducers.</p><p>From the programme:</p><p><blockquote><p> Sharing experience gained from his work on a mission-critical data product earlier this year, Henry will speak about some newer features of Clojure that enable data scientists to write concise, expressive and performant data processing code. He’ll explore transducers and reducing functions, and show how simple functional combinators can make even sophisticated analytical code both faster and easier to comprehend. </p></blockquote></p><p>The key takeaway is that with transducers, reducing functions must now provide an arity-1 <strong>completer</strong> implementation which provides them with the opportunity to convert an accumulated value into a final output. Together with the (optional) arity-0 <strong>initializer</strong> this provides reducing functions the ability to wrap arbitrarily intricate state. The natural composability of transducers can be mirrored with similarly composable reducing functions to build up sophisticated parallel computations.</p><p>You can see a <a href='https://skillsmatter.com/skillscasts/7243-expressive-parallel-analytics-with-clojure'>video of the talk</a> on Skills Matter's website, the <a href='https://github.com/henrygarner/cljx-december-2015'>org-mode slides</a>, or a PDF of the presentation below.</p><p><script async class="speakerdeck-embed" data-id="9945344f8783426d8e5fdffc90d5d818" data-ratio="1.37081659973226" src="//speakerdeck.com/assets/embed.js"></script></p>
+     <p> <a href='https://twitter.com/henrygarner'>Henry</a> wrote an article for InfoQ as part of their <a href='https://www.infoq.com/handle-data-science'>Getting a Handle on Data Science</a> series.</p><p>The article was titled <a href='https://www.infoq.com/articles/data-science-abstraction'>Data Science Up and Down the Ladder of Abstraction</a> and in it he set out his reasons for adopting Clojure, including its:</p><ul><li>Excellent tooling for REPL-driven development and notebooks for exploratory analysis and live charting.</li><li>Suitability for creating shareable browser-based visualisations and interactive simulations with modern UI frameworks like Facebook's React.</li><li>Interoperability with Java, JavaScript, and Scala for making use of established and actively developed numerical optimisation, distributed computing, and machine learning libraries.</li><li>Data-oriented functional core with a focus on composable sequence processing interfaces which scale with the volume of data you have.</li><li>Clean and unambiguous syntax which even aids my comprehension of transcribed algorithms.</li><li>Macro system which enables extensibility at the language level for custom algorithmic abstractions and cleaner code.</li></ul><p>You can read the full article <a href='https://www.infoq.com/articles/data-science-abstraction'>here</a>.</p>
 </div>
 
 <div id="post-tags">
     <b>Tags: </b>
     
-    <a href="/tags/reducers.html">reducers</a>
-    
     <a href="/tags/clojure.html">clojure</a>
     
     <a href="/tags/data science.html">data science</a>
     
-    <a href="/tags/statistics.html">statistics</a>
-    
-    <a href="/tags/transducers.html">transducers</a>
-    
-    <a href="/tags/talks.html">talks</a>
+    <a href="/tags/article.html">article</a>
     
 </div>
 
 
     <div id="prev-next">
         
-        <a href="/posts/2016-12-01-clojure-machine-learning.html">&laquo; Clojure for Machine Learning</a>
         
-        
-        <a class="right" href="/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html">Parallel Folds: Reducers, Tesser and Linear Regression &raquo;</a>
+        <a class="right" href="/posts/2016-12-01-clojure-machine-learning.html">Clojure for Machine Learning &raquo;</a>
         
     </div>
 

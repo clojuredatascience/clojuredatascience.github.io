@@ -12,11 +12,45 @@ http://clojuredatascience.com/
 This is the blog to accompany the book Clojure for Data Science published by Packt.
 </description>
 <lastBuildDate>
-Sat, 05 Dec 2015 13:57:45 +0000
+Tue, 13 Dec 2016 11:46:58 +0000
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2016-12-02-data-science-ladder-abstraction.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2016-12-02-data-science-ladder-abstraction.html
+</link>
+<title>
+Data Science Up and Down the Ladder of Abstraction
+</title>
+<description>
+ &lt;p&gt; &lt;a href='https://twitter.com/henrygarner'&gt;Henry&lt;/a&gt; wrote an article for InfoQ as part of their &lt;a href='https://www.infoq.com/handle-data-science'&gt;Getting a Handle on Data Science&lt;/a&gt; series.&lt;/p&gt;&lt;p&gt;The article was titled &lt;a href='https://www.infoq.com/articles/data-science-abstraction'&gt;Data Science Up and Down the Ladder of Abstraction&lt;/a&gt; and in it he set out his reasons for adopting Clojure, including its:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Excellent tooling for REPL-driven development and notebooks for exploratory analysis and live charting.&lt;/li&gt;&lt;li&gt;Suitability for creating shareable browser-based visualisations and interactive simulations with modern UI frameworks like Facebook's React.&lt;/li&gt;&lt;li&gt;Interoperability with Java, JavaScript, and Scala for making use of established and actively developed numerical optimisation, distributed computing, and machine learning libraries.&lt;/li&gt;&lt;li&gt;Data-oriented functional core with a focus on composable sequence processing interfaces which scale with the volume of data you have.&lt;/li&gt;&lt;li&gt;Clean and unambiguous syntax which even aids my comprehension of transcribed algorithms.&lt;/li&gt;&lt;li&gt;Macro system which enables extensibility at the language level for custom algorithmic abstractions and cleaner code.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;You can read the full article &lt;a href='https://www.infoq.com/articles/data-science-abstraction'&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+<pubDate>
+Fri, 02 Dec 2016 00:00:00 +0000
+</pubDate>
+</item>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2016-12-01-clojure-machine-learning.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2016-12-01-clojure-machine-learning.html
+</link>
+<title>
+Clojure for Machine Learning
+</title>
+<description>
+&lt;br /&gt;&lt;p&gt;&lt;a href='https://twitter.com/henrygarner'&gt;Henry&lt;/a&gt; gave a talk at London's &lt;a href='https://skillsmatter.com/conferences/7430-clojure-exchange-2016#program'&gt;Clojure eXchange 2016&lt;/a&gt; on the subject of machine learning in Clojure.&lt;/p&gt;&lt;p&gt;From the programme:&lt;/p&gt;&lt;p&gt;&lt;blockquote&gt;&lt;p&gt; You have heard that Clojure’s ancestor language, Lisp, was developed for artificial intelligence research. Yet, until recently, Clojure’s support for machine learning has mostly consisted of wrapped Java libraries.&lt;/p&gt;&lt;/p&gt;&lt;p&gt;&lt;p&gt;Informed by his work as a freelance data scientist working primarily with Clojure, Henry will explore some newer libraries that enable sophisticated data analysis unencumbered by Java’s legacy. You will also learn how Clojure’s core sequence-processing strengths naturally lend themselves to simple machine learning techniques you can try at home. &lt;/p&gt;&lt;/blockquote&gt;&lt;/p&gt;&lt;p&gt;You can see a &lt;a href='https://skillsmatter.com/skillscasts/9050-clojure-for-machine-learning'&gt;video of the talk&lt;/a&gt; on the Skills Matter website, the &lt;a href='https://github.com/henrygarner/cljx-december-2016'&gt;org-mode slides&lt;/a&gt;, or a PDF of the presentation below.&lt;/p&gt;&lt;p&gt;&lt;script async class=&quot;speakerdeck-embed&quot; data-id=&quot;8afdab93e5b74236848186367c000ef7&quot; data-ratio=&quot;1.37081659973226&quot; src=&quot;//speakerdeck.com/assets/embed.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+</description>
+<pubDate>
+Thu, 01 Dec 2016 00:00:00 +0000
+</pubDate>
+</item>
 <item>
 <guid>
 http://clojuredatascience.com/posts/2015-12-05-expressive-parallel-analytics-with-clojure.html
