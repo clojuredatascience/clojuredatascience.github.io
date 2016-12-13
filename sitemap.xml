@@ -5,7 +5,7 @@
 http://clojuredatascience.com/404.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -13,7 +13,7 @@ http://clojuredatascience.com/404.html
 http://clojuredatascience.com/archives.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -21,7 +21,7 @@ http://clojuredatascience.com/archives.html
 http://clojuredatascience.com/index.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -29,7 +29,7 @@ http://clojuredatascience.com/index.html
 http://clojuredatascience.com/pages/about.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -37,7 +37,7 @@ http://clojuredatascience.com/pages/about.html
 http://clojuredatascience.com/posts/2015-04-07-hello-world.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -45,7 +45,7 @@ http://clojuredatascience.com/posts/2015-04-07-hello-world.html
 http://clojuredatascience.com/posts/2015-09-05-published.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -53,7 +53,7 @@ http://clojuredatascience.com/posts/2015-09-05-published.html
 http://clojuredatascience.com/posts/2015-09-05-regression-classification-clustering-clojure.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -61,7 +61,7 @@ http://clojuredatascience.com/posts/2015-09-05-regression-classification-cluster
 http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-linear-regression.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -69,7 +69,31 @@ http://clojuredatascience.com/posts/2015-09-12-parallel-folds-reducers-tesser-li
 http://clojuredatascience.com/posts/2015-12-05-expressive-parallel-analytics-with-clojure.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
+</lastmod>
+</url>
+<url>
+<loc>
+http://clojuredatascience.com/posts/2016-12-01-clojure-machine-learning.html
+</loc>
+<lastmod>
+2016-12-13
+</lastmod>
+</url>
+<url>
+<loc>
+http://clojuredatascience.com/posts/2016-12-02-data-science-ladder-abstraction.html
+</loc>
+<lastmod>
+2016-12-13
+</lastmod>
+</url>
+<url>
+<loc>
+http://clojuredatascience.com/tags/article.html
+</loc>
+<lastmod>
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -77,7 +101,7 @@ http://clojuredatascience.com/posts/2015-12-05-expressive-parallel-analytics-wit
 http://clojuredatascience.com/tags/bayes theorem.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -85,7 +109,7 @@ http://clojuredatascience.com/tags/bayes theorem.html
 http://clojuredatascience.com/tags/big data.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -93,7 +117,7 @@ http://clojuredatascience.com/tags/big data.html
 http://clojuredatascience.com/tags/book.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -101,7 +125,7 @@ http://clojuredatascience.com/tags/book.html
 http://clojuredatascience.com/tags/classification.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -109,7 +133,7 @@ http://clojuredatascience.com/tags/classification.html
 http://clojuredatascience.com/tags/clojure.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -117,7 +141,7 @@ http://clojuredatascience.com/tags/clojure.html
 http://clojuredatascience.com/tags/clustering.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -125,7 +149,7 @@ http://clojuredatascience.com/tags/clustering.html
 http://clojuredatascience.com/tags/correlation.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -133,7 +157,7 @@ http://clojuredatascience.com/tags/correlation.html
 http://clojuredatascience.com/tags/data science.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -141,7 +165,7 @@ http://clojuredatascience.com/tags/data science.html
 http://clojuredatascience.com/tags/k-means.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -149,7 +173,7 @@ http://clojuredatascience.com/tags/k-means.html
 http://clojuredatascience.com/tags/linear regression.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -157,7 +181,15 @@ http://clojuredatascience.com/tags/linear regression.html
 http://clojuredatascience.com/tags/logistic regression.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
+</lastmod>
+</url>
+<url>
+<loc>
+http://clojuredatascience.com/tags/machine learning.html
+</loc>
+<lastmod>
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -165,7 +197,7 @@ http://clojuredatascience.com/tags/logistic regression.html
 http://clojuredatascience.com/tags/parkour.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -173,7 +205,7 @@ http://clojuredatascience.com/tags/parkour.html
 http://clojuredatascience.com/tags/quil.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -181,7 +213,7 @@ http://clojuredatascience.com/tags/quil.html
 http://clojuredatascience.com/tags/reducers.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -189,7 +221,7 @@ http://clojuredatascience.com/tags/reducers.html
 http://clojuredatascience.com/tags/statistics.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -197,7 +229,7 @@ http://clojuredatascience.com/tags/statistics.html
 http://clojuredatascience.com/tags/talks.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -205,7 +237,7 @@ http://clojuredatascience.com/tags/talks.html
 http://clojuredatascience.com/tags/tesser.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -213,7 +245,7 @@ http://clojuredatascience.com/tags/tesser.html
 http://clojuredatascience.com/tags/transducers.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -221,7 +253,7 @@ http://clojuredatascience.com/tags/transducers.html
 http://clojuredatascience.com/tags/visualization.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 <url>
@@ -229,7 +261,7 @@ http://clojuredatascience.com/tags/visualization.html
 http://clojuredatascience.com/tags.html
 </loc>
 <lastmod>
-2015-12-05
+2016-12-13
 </lastmod>
 </url>
 </urlset>
