@@ -1,6 +1,6 @@
 {:title "Clojure for Machine Learning"
  :layout :post
- :tags  ["clojure" "data science" "talks" "machine learning"]}
+ :tags  ["clojure" "data science" "talks" "machine learning" "linear regression" "transducers" "classification"]}
   
 [Henry](https://twitter.com/henrygarner) gave a talk at London's [Clojure eXchange 2016](https://skillsmatter.com/conferences/7430-clojure-exchange-2016#program) on the subject of machine learning in Clojure.
 
