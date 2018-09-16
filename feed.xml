@@ -12,11 +12,28 @@ http://clojuredatascience.com/
 This is the blog to accompany the book Clojure for Data Science published by Packt.
 </description>
 <lastBuildDate>
-Tue, 13 Dec 2016 12:00:57 +0000
+Sun, 16 Sep 2018 20:32:59 +0100
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2018-09-15-data-science-with-kixi-stats.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2018-09-15-data-science-with-kixi-stats.html
+</link>
+<title>
+Data Science Screencasts from Lambda Island
+</title>
+<description>
+&lt;p&gt;&lt;a href='https://lambdaisland.com/'&gt;Lambda Island&lt;/a&gt; has produced a high-quality Clojure-focused screencast every few weeks over the past couple of years. &lt;a href='https://twitter.com/plexus'&gt;Arne Brasseur&lt;/a&gt; is the author and producer of these videos. To date he's generated diverse walk-throughs on language fundamentals, library APIs, architectural considerations, and development tooling. The most recent two screencasts, numbers 43 &amp; 44, have signalled a move into the realm of data science. Both screencasts make heavy use of &lt;a href='https://github.com/mastodonC/kixi.stats'&gt;kixi.stats&lt;/a&gt;: a library of statistical reducing functions. As the author of kixi.stats, I'm relieved to say that I think that the topics are dealt with really well.&lt;/p&gt;&lt;p&gt;The screencasts are intended for a broad audience, and the material covered is beginner-friendly. The &lt;a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats'&gt;first video&lt;/a&gt; could more accurately be titled &lt;i&gt;&quot;Exploratory data analysis with Clojure's Transducers&quot;&lt;/i&gt;, but in any case this is worthy material for a video of this length. If you want to understand how Clojure's transducers can be used to create summary statistics in a single pass over the data, and how to render empirical distributions to histograms and interpret them, this is a great place to start.&lt;/p&gt;&lt;p&gt;The &lt;a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2'&gt;second video&lt;/a&gt; builds towards the creation of a simple linear model. Along the way, standard data science concerns regarding data scrubbing, feature selection and model evaluation are covered. The screencast also demonstrates how to make use of transducers and composite reducing functions to achieve non-trivial results. For example, at one point we are shown how to create a reducing function which returns a linear model expressed as a function of &lt;i&gt;x&lt;/i&gt; and &lt;i&gt;y&lt;/i&gt;. Chaining a post-complete function to a reducing function to  return a function?! It's functions all the way down!&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats'&gt;Data Science with Kixi.stats, part 1&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2'&gt;Data Science with Kixi.stats, part 2&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;A free trial is available, and discounts are available for those unable to cover the full fee. Whether or not you decide to subscribe, the code for each episode is freely accessible on GitHub. For example, &lt;a href='https://github.com/lambdaisland/ep43-data-science-kixi-stats'&gt;here's the code for episode 43&lt;/a&gt;. For me, the graphs namespace is particularly noteworthy because Clojure currently lacks a flexible high-level charting library. As a complete tangent to the main content of his screencasts, Arne has done an excellent job of spiking out a set of functions which could form the basis of such a library. Watch this space...&lt;/p&gt;&lt;p&gt;&lt;i&gt;Disclosure: Henry was granted free access to Lambda Island in exchange for advising on the content of the episodes linked above.&lt;/i&gt;&lt;/p&gt;
+</description>
+<pubDate>
+Sat, 15 Sep 2018 00:00:00 +0100
+</pubDate>
+</item>
 <item>
 <guid>
 http://clojuredatascience.com/posts/2016-12-02-data-science-ladder-abstraction.html
