@@ -9,9 +9,11 @@ The screencasts are intended for a broad audience, and the material covered is b
 
 The [second video](https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2) builds towards the creation of a simple linear model. Along the way, standard data science concerns regarding data scrubbing, feature selection and model evaluation are covered. The screencast also demonstrates how to make use of transducers and composite reducing functions to achieve non-trivial results. For example, at one point we are shown how to create a reducing function which returns a linear model expressed as a function of _x_ and _y_. Chaining a post-complete function to a reducing function to  return a function?! It's functions all the way down!
 
-* [Data Science with Kixi.stats, part 1](https://lambdaisland.com/episodes/clojure-data-science-kixi-stats)
-* [Data Science with Kixi.stats, part 2](https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2)
+* [Data Science with kixi.stats, part 1](https://lambdaisland.com/episodes/clojure-data-science-kixi-stats)
+* [Data Science with kixi.stats, part 2](https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2)
 
-A free trial is available, and discounts are available for those unable to cover the full fee. Whether or not you decide to subscribe, the code for each episode is freely accessible on GitHub. For example, [here's the code for episode 43](https://github.com/lambdaisland/ep43-data-science-kixi-stats). For me, the graphs namespace is particularly noteworthy because Clojure currently lacks a flexible high-level charting library. As a complete tangent to the main content of his screencasts, Arne has done an excellent job of spiking out a set of functions which could form the basis of such a library. Watch this space...
+A free trial is available, and discounts are available for those unable to cover the full fee. Whether or not you decide to subscribe, the code for each episode is freely accessible on GitHub. For example, [here's the code for episode 43](https://github.com/lambdaisland/ep43-data-science-kixi-stats).
+
+For me, the graphs namespace is particularly noteworthy because Clojure currently lacks a flexible high-level charting library. As a complete tangent to the main content of his screencasts, Arne has done an excellent job of spiking out a set of functions which could form the basis of such a library. Watch this space...
 
 _Disclosure: Henry was granted free access to Lambda Island in exchange for advising on the content of the episodes linked above._
