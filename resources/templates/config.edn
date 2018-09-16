@@ -1,5 +1,6 @@
 {:site-title         "Clojure for Data Science"
  :author             "Henry Garner"
+ :copyright          2018
  :description        "This is the blog to accompany the book Clojure for Data Science published by Packt."
  :site-url           "http://clojuredatascience.com/"
  :post-root          "posts"
@@ -12,7 +13,7 @@
  :post-date-format   "yyyy-MM-dd"
  :sass-src           nil
  :sass-dest          nil
- :theme              "blue"
+ :theme              "cljds"
  :resources          ["img" "CNAME"]
  :keep-files         [".git"]
  :disqus?            false

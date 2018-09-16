@@ -14,6 +14,14 @@
     </script>
     <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link href="css/screen.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <script>
+      WebFont.load({
+        google: {
+          families: ["Open Sans:300,300italic,400,400italic,600,600italic","PT Serif:400,400italic,700,700italic","Source Code Pro:regular,500"]
+        }
+      });
+    </script>
 </head>
 <body>
 
@@ -57,24 +65,29 @@
 <div id="post">
     <div class="post-header">
     <div id="post-meta" class="row">
-        <div class="col-lg-6">02 December 2016</div>
-        
+        <div class="col-lg-6">15 September 2018 | Henry Garner</div>
     </div>
-    <h2>Data Science Up and Down the Ladder of Abstraction</h2>
+    <h2>Data Science Screencasts from Lambda Island</h2>
 </div>
 <div>
     
-     <p> <a href='https://twitter.com/henrygarner'>Henry</a> wrote an article for InfoQ as part of their <a href='https://www.infoq.com/handle-data-science'>Getting a Handle on Data Science</a> series.</p><p>The article was titled <a href='https://www.infoq.com/articles/data-science-abstraction'>Data Science Up and Down the Ladder of Abstraction</a> and in it he set out his reasons for adopting Clojure, including its:</p><ul><li>Excellent tooling for REPL-driven development and notebooks for exploratory analysis and live charting.</li><li>Suitability for creating shareable browser-based visualisations and interactive simulations with modern UI frameworks like Facebook's React.</li><li>Interoperability with Java, JavaScript, and Scala for making use of established and actively developed numerical optimisation, distributed computing, and machine learning libraries.</li><li>Data-oriented functional core with a focus on composable sequence processing interfaces which scale with the volume of data you have.</li><li>Clean and unambiguous syntax which even aids my comprehension of transcribed algorithms.</li><li>Macro system which enables extensibility at the language level for custom algorithmic abstractions and cleaner code.</li></ul><p>You can read the full article <a href='https://www.infoq.com/articles/data-science-abstraction'>here</a>.</p>
+    <p><a href='https://lambdaisland.com/'>Lambda Island</a> has produced a high-quality Clojure-focused screencast every few weeks over the past couple of years. <a href='https://twitter.com/plexus'>Arne Brasseur</a> is the author and producer of these videos. To date he's generated diverse walk-throughs on language fundamentals, library APIs, architectural considerations, and development tooling. The most recent two screencasts, numbers 43 & 44, have signalled a move into the realm of data science. Both screencasts make heavy use of <a href='https://github.com/mastodonC/kixi.stats'>kixi.stats</a>: a library of statistical reducing functions. As the author of kixi.stats, I'm relieved to say that I think that the topics are dealt with really well.</p><p>The screencasts are intended for a broad audience, and the material covered is beginner-friendly. The <a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats'>first video</a> could more accurately be titled <i>"Exploratory data analysis with Clojure's Transducers"</i>, but in any case this is worthy material for a video of this length. If you want to understand how Clojure's transducers can be used to create summary statistics in a single pass over the data, and how to render empirical distributions to histograms and interpret them, this is a great place to start.</p><p>The <a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2'>second video</a> builds towards the creation of a simple linear model. Along the way, standard data science concerns regarding data scrubbing, feature selection and model evaluation are covered. The screencast also demonstrates how to make use of transducers and composite reducing functions to achieve non-trivial results. For example, at one point we are shown how to create a reducing function which returns a linear model expressed as a function of <i>x</i> and <i>y</i>. Chaining a post-complete function to a reducing function to  return a function?! It's functions all the way down!</p><ul><li><a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats'>Data Science with Kixi.stats, part 1</a></li><li><a href='https://lambdaisland.com/episodes/clojure-data-science-kixi-stats-2'>Data Science with Kixi.stats, part 2</a></li></ul><p>A free trial is available, and discounts are available for those unable to cover the full fee. Whether or not you decide to subscribe, the code for each episode is freely accessible on GitHub. For example, <a href='https://github.com/lambdaisland/ep43-data-science-kixi-stats'>here's the code for episode 43</a>. For me, the graphs namespace is particularly noteworthy because Clojure currently lacks a flexible high-level charting library. As a complete tangent to the main content of his screencasts, Arne has done an excellent job of spiking out a set of functions which could form the basis of such a library. Watch this space...</p><p><i>Disclosure: Henry was granted free access to Lambda Island in exchange for advising on the content of the episodes linked above.</i></p>
 </div>
 
 <div id="post-tags">
     <b>Tags: </b>
     
+    <a href="/tags/screencast.html">screencast</a>
+    
+    <a href="/tags/transduce.html">transduce</a>
+    
     <a href="/tags/clojure.html">clojure</a>
     
     <a href="/tags/data science.html">data science</a>
     
-    <a href="/tags/article.html">article</a>
+    <a href="/tags/kixi.stats.html">kixi.stats</a>
+    
+    <a href="/tags/xforms.html">xforms</a>
     
 </div>
 
@@ -84,7 +97,7 @@
     <div id="prev-next">
         
         
-        <a class="right" href="/posts/2016-12-01-clojure-machine-learning.html">Clojure for Machine Learning &raquo;</a>
+        <a class="right" href="/posts/2016-12-02-data-science-ladder-abstraction.html">Data Science Up and Down the Ladder of Abstraction &raquo;</a>
         
     </div>
 </div>
@@ -94,9 +107,10 @@
 
         <div class="col-md-3">
             <div id="sidebar">
-                <h3>Links</h3>
+                <h3>Book Links</h3>
                 <ul id="links">
-                    <li><a href="https://github.com/clojuredatascience/">Code</a></li>
+		    <li><a href="https://www.packtpub.com/big-data-and-business-intelligence/clojure-data-science">Buy the book</a></li>
+                    <li><a href="https://github.com/clojuredatascience/">GitHub</a></li>
                     <li><a href="https://github.com/clojuredatascience/clojuredatascience.github.io/wiki">Wiki</a></li>
                     <li><a href="https://github.com/clojuredatascience/clojuredatascience.github.io/wiki/Errata">Errata</a></li>
                     <li><a href="https://twitter.com/cljds">@cljds</a></li>
@@ -108,11 +122,11 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/posts/2018-09-15-data-science-with-kixi-stats.html">Data Science Screencasts from Lambda Island</a></li>
+                        
                         <li><a href="/posts/2016-12-02-data-science-ladder-abstraction.html">Data Science Up and Down the Ladder of Abstraction</a></li>
                         
                         <li><a href="/posts/2016-12-01-clojure-machine-learning.html">Clojure for Machine Learning</a></li>
-                        
-                        <li><a href="/posts/2015-12-05-expressive-parallel-analytics-with-clojure.html">Expressive Parallel Analytics with Clojure</a></li>
                         
                     </ul>
                 </div>
@@ -122,9 +136,13 @@
                     <h3>Tags</h3>
                     <ul>
                         
+                        <li><a href="/tags/screencast.html">screencast</a></li>
+                        
                         <li><a href="/tags/quil.html">quil</a></li>
                         
                         <li><a href="/tags/book.html">book</a></li>
+                        
+                        <li><a href="/tags/transduce.html">transduce</a></li>
                         
                         <li><a href="/tags/reducers.html">reducers</a></li>
                         
@@ -158,9 +176,13 @@
                         
                         <li><a href="/tags/logistic regression.html">logistic regression</a></li>
                         
+                        <li><a href="/tags/kixi.stats.html">kixi.stats</a></li>
+                        
                         <li><a href="/tags/bayes theorem.html">bayes theorem</a></li>
                         
                         <li><a href="/tags/machine learning.html">machine learning</a></li>
+                        
+                        <li><a href="/tags/xforms.html">xforms</a></li>
                         
                         <li><a href="/tags/classification.html">classification</a></li>
                         
@@ -170,7 +192,7 @@
             </div>
         </div>
     </div>
-    <footer>Copyright &copy; 2015 Henry Garner
+    <footer>Copyright &copy; 2018 Henry Garner
         <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p></footer>
 </div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
