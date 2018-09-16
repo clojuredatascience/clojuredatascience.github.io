@@ -1,1 +1,1 @@
-git subtree push --squash --prefix resources/public origin master
+git push origin `git subtree split --squash --prefix resources/public`:master --force
