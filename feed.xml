@@ -12,11 +12,28 @@ http://clojuredatascience.com/
 This is the blog to accompany the book Clojure for Data Science published by Packt.
 </description>
 <lastBuildDate>
-Sun, 16 Sep 2018 20:45:31 +0100
+Sun, 06 Jan 2019 14:01:49 +0000
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
+<item>
+<guid>
+http://clojuredatascience.com/posts/2019-01-05-boring-data-science-with-kixi-stats.html
+</guid>
+<link>
+http://clojuredatascience.com/posts/2019-01-05-boring-data-science-with-kixi-stats.html
+</link>
+<title>
+Boring data science with kixi.stats
+</title>
+<description>
+ &lt;p&gt;I'm pleased to announce that &lt;a href='https://cljdoc.org/d/kixi/stats/0.5.0/doc/readme'&gt;kixi.stats v0.5.0&lt;/a&gt; has been released. Some of the new goodies are detailed below, but since it's early January 2019 (and close to the 3rd anniversary of the first commit), I can't help but reflect on the new features in the context of kixi.stats' evolution since its inception as well.&lt;/p&gt;&lt;p&gt;&lt;a href='https://github.com/mastodonc/kixi.stats'&gt;kixi.stats&lt;/a&gt; was originally concieved as &lt;i&gt;a library of statistical reducing functions&lt;/i&gt;, which is to say functions which can be supplied to &lt;a href='https://clojure.org/reference/transducers'&gt;&lt;code&gt;transduce&lt;/code&gt;&lt;/a&gt;. Accordingly, almost the entirety of &lt;a href='https://cljdoc.org/d/kixi/stats/0.5.0/api/kixi.stats.core'&gt;kixi.stats.core&lt;/a&gt; is given over to reducing functions (each of which accepts elements from a sequence in turn and subsequently returns some derived value once the sequence is exhausted). Routines as trivial as calculating the &lt;code&gt;min&lt;/code&gt; &amp; &lt;code&gt;max&lt;/code&gt;, to those which calculate descriptive statistics such as the &lt;code&gt;standard-deviation&lt;/code&gt; or &lt;code&gt;kurtosis&lt;/code&gt;, to those performing inferential hypothesis tests such as the &lt;code&gt;z-test&lt;/code&gt; and &lt;code&gt;chi-squared-test&lt;/code&gt; are all expressed as reducing functions.&lt;/p&gt;&lt;p&gt;In his discursive video &lt;a href='https://www.youtube.com/watch?v=VPp0ahoQR3o'&gt;What Clojure needs to grow&lt;/a&gt;, &lt;a href='https://twitter.com/ericnormand'&gt;Eric Normand&lt;/a&gt; presents his view that frameworks tackling the more mundane aspects data science (and web development) are necessary for Clojure to reach a broader audience. In particular, he seeks more &lt;i&gt;boring data science&lt;/i&gt; support. I'm not going to get into the framework vs library debate here, but for &lt;a href='https://www.infoq.com/articles/data-science-abstraction'&gt;many reasons I detailed for InfoQ&lt;/a&gt; a while ago, I think that Clojure's natural strengths make it a great fit for doing daily data science.&lt;/p&gt;&lt;p&gt;It's in the area of statistical inference where recent kixi.stats work has been most focused. Boring data science sometimes means routine hypothesis testing on small datasets, and kixi.stats finally has &lt;code&gt;t-test&lt;/code&gt; (implementing &lt;a href='https://en.wikipedia.org/wiki/Welch%27s&amp;#95;t-test'&gt;Welch's unequal variances&lt;/a&gt; t-test) and &lt;code&gt;simple-t-test&lt;/code&gt; functions. In addition they—together with the &lt;code&gt;z-test&lt;/code&gt; and &lt;code&gt;chi-squared-test&lt;/code&gt; functions—all now return an implementation of the &lt;code&gt;PTestResult&lt;/code&gt; protocol. This mandates implementations of &lt;code&gt;p-value&lt;/code&gt; and &lt;code&gt;significant?&lt;/code&gt; (with the option to override default one- or two-tailed test behaviour).&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;/img/kixi-stats-regression-intervals.png&quot; alt=&quot;Linear regression confidence &amp; prediction intervals&quot; /&gt;&lt;/p&gt;&lt;p&gt;kixi.stats is now over 3 years old, and the self-imposed goal of meeting all challenges with a new reducing function has become a hinderance to further development. The library has grown to include 7 namespaces: &lt;code&gt;core&lt;/code&gt;, &lt;code&gt;digest&lt;/code&gt;, &lt;code&gt;distribution&lt;/code&gt;, &lt;code&gt;estimate&lt;/code&gt;, &lt;code&gt;math&lt;/code&gt;, &lt;code&gt;protocols&lt;/code&gt;, and &lt;code&gt;test&lt;/code&gt;. The &lt;a href='https://cljdoc.org/d/kixi/stats/0.5.0/api/kixi.stats.estimate'&gt;estimate&lt;/a&gt; namespace is new in the latest version. It contains a handful of functions, each of which accepts a &lt;code&gt;sum-squares&lt;/code&gt; covariance digest and returns an estimate, e.g. of the line of best fit, regression or prediction interval at a given alpha value.&lt;/p&gt;&lt;p&gt;Hopefully the above serves to illustrate how kixi.stats has grown to include—in addition to simple descriptive scalar statistics—support for models, inference and more. I'm excited about each new release, and building confidence that there is room to complement the more specialist data science heavyweights such as the &lt;a href='https://github.com/uncomplicate'&gt;uncomplicate libraries&lt;/a&gt; or &lt;a href='https://mxnet.apache.org/api/clojure/index.html'&gt;MXNet&lt;/a&gt;. I'm not ready to uninstall RStudio just yet, but the roadmap for the coming year should bring kixi.stats, and Clojure, some really &lt;strong&gt;boring&lt;/strong&gt; new features. 	&lt;/p&gt;&lt;p&gt;Do you have an idea of what you'd like a boring data science framework to be? &lt;a href='mailto:henry@henrygarner.com'&gt;Email&lt;/a&gt; or &lt;a href='https://twitter.com/henrygarner'&gt;Tweet&lt;/a&gt; me!&lt;/p&gt;&lt;p&gt;&lt;i&gt;Henry Garner is the author of kixi.stats.&lt;/i&gt;&lt;/p&gt;
+</description>
+<pubDate>
+Sat, 05 Jan 2019 00:00:00 +0000
+</pubDate>
+</item>
 <item>
 <guid>
 http://clojuredatascience.com/posts/2018-09-15-data-science-with-kixi-stats.html

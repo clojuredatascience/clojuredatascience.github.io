@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Clojure for Data Science: Posts Tagged &quot;transduce&quot;</title>
+    <title>Clojure for Data Science: Boring data science with kixi.stats</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Alegreya:400italic,700italic,400,700' rel='stylesheet'
           type='text/css'>
@@ -62,17 +62,44 @@
         <div class="col-lg-9">
             <div id="content">
                 
-<div id="posts-by-tag">
-    <div id="page-header">
-        <h2>Posts Tagged &quot;transduce&quot;</h2>
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        <div class="col-lg-6">05 January 2019 | Henry Garner</div>
     </div>
-    <ul>
+    <h2>Boring data science with kixi.stats</h2>
+</div>
+<div>
     
-        <li>
-            <a href="/posts/2018-09-15-data-science-with-kixi-stats.html">Data Science Screencasts from Lambda Island</a>
-        </li>
+     <p>I'm pleased to announce that <a href='https://cljdoc.org/d/kixi/stats/0.5.0/doc/readme'>kixi.stats v0.5.0</a> has been released. Some of the new goodies are detailed below, but since it's early January 2019 (and close to the 3rd anniversary of the first commit), I can't help but reflect on the new features in the context of kixi.stats' evolution since its inception as well.</p><p><a href='https://github.com/mastodonc/kixi.stats'>kixi.stats</a> was originally concieved as <i>a library of statistical reducing functions</i>, which is to say functions which can be supplied to <a href='https://clojure.org/reference/transducers'><code>transduce</code></a>. Accordingly, almost the entirety of <a href='https://cljdoc.org/d/kixi/stats/0.5.0/api/kixi.stats.core'>kixi.stats.core</a> is given over to reducing functions (each of which accepts elements from a sequence in turn and subsequently returns some derived value once the sequence is exhausted). Routines as trivial as calculating the <code>min</code> & <code>max</code>, to those which calculate descriptive statistics such as the <code>standard-deviation</code> or <code>kurtosis</code>, to those performing inferential hypothesis tests such as the <code>z-test</code> and <code>chi-squared-test</code> are all expressed as reducing functions.</p><p>In his discursive video <a href='https://www.youtube.com/watch?v=VPp0ahoQR3o'>What Clojure needs to grow</a>, <a href='https://twitter.com/ericnormand'>Eric Normand</a> presents his view that frameworks tackling the more mundane aspects data science (and web development) are necessary for Clojure to reach a broader audience. In particular, he seeks more <i>boring data science</i> support. I'm not going to get into the framework vs library debate here, but for <a href='https://www.infoq.com/articles/data-science-abstraction'>many reasons I detailed for InfoQ</a> a while ago, I think that Clojure's natural strengths make it a great fit for doing daily data science.</p><p>It's in the area of statistical inference where recent kixi.stats work has been most focused. Boring data science sometimes means routine hypothesis testing on small datasets, and kixi.stats finally has <code>t-test</code> (implementing <a href='https://en.wikipedia.org/wiki/Welch%27s&#95;t-test'>Welch's unequal variances</a> t-test) and <code>simple-t-test</code> functions. In addition they—together with the <code>z-test</code> and <code>chi-squared-test</code> functions—all now return an implementation of the <code>PTestResult</code> protocol. This mandates implementations of <code>p-value</code> and <code>significant?</code> (with the option to override default one- or two-tailed test behaviour).</p><p><img src="/img/kixi-stats-regression-intervals.png" alt="Linear regression confidence & prediction intervals" /></p><p>kixi.stats is now over 3 years old, and the self-imposed goal of meeting all challenges with a new reducing function has become a hinderance to further development. The library has grown to include 7 namespaces: <code>core</code>, <code>digest</code>, <code>distribution</code>, <code>estimate</code>, <code>math</code>, <code>protocols</code>, and <code>test</code>. The <a href='https://cljdoc.org/d/kixi/stats/0.5.0/api/kixi.stats.estimate'>estimate</a> namespace is new in the latest version. It contains a handful of functions, each of which accepts a <code>sum-squares</code> covariance digest and returns an estimate, e.g. of the line of best fit, regression or prediction interval at a given alpha value.</p><p>Hopefully the above serves to illustrate how kixi.stats has grown to include—in addition to simple descriptive scalar statistics—support for models, inference and more. I'm excited about each new release, and building confidence that there is room to complement the more specialist data science heavyweights such as the <a href='https://github.com/uncomplicate'>uncomplicate libraries</a> or <a href='https://mxnet.apache.org/api/clojure/index.html'>MXNet</a>. I'm not ready to uninstall RStudio just yet, but the roadmap for the coming year should bring kixi.stats, and Clojure, some really <strong>boring</strong> new features. 	</p><p>Do you have an idea of what you'd like a boring data science framework to be? <a href='mailto:henry@henrygarner.com'>Email</a> or <a href='https://twitter.com/henrygarner'>Tweet</a> me!</p><p><i>Henry Garner is the author of kixi.stats.</i></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
     
-    </ul>
+    <a href="/tags/clojure.html">clojure</a>
+    
+    <a href="/tags/data science.html">data science</a>
+    
+    <a href="/tags/linear regression.html">linear regression</a>
+    
+    <a href="/tags/transducers.html">transducers</a>
+    
+    <a href="/tags/kixi.stats.html">kixi.stats</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        
+        <a class="right" href="/posts/2018-09-15-data-science-with-kixi-stats.html">Data Science Screencasts from Lambda Island &raquo;</a>
+        
+    </div>
+
+    
+
+
 </div>
 
             </div>
@@ -95,11 +122,11 @@
                     <h3>Recent Posts</h3>
                     <ul>
                         
+                        <li><a href="/posts/2019-01-05-boring-data-science-with-kixi-stats.html">Boring data science with kixi.stats</a></li>
+                        
                         <li><a href="/posts/2018-09-15-data-science-with-kixi-stats.html">Data Science Screencasts from Lambda Island</a></li>
                         
                         <li><a href="/posts/2016-12-02-data-science-ladder-abstraction.html">Data Science Up and Down the Ladder of Abstraction</a></li>
-                        
-                        <li><a href="/posts/2016-12-01-clojure-machine-learning.html">Clojure for Machine Learning</a></li>
                         
                     </ul>
                 </div>
@@ -114,8 +141,6 @@
                         <li><a href="/tags/quil.html">quil</a></li>
                         
                         <li><a href="/tags/book.html">book</a></li>
-                        
-                        <li><a href="/tags/transduce.html">transduce</a></li>
                         
                         <li><a href="/tags/reducers.html">reducers</a></li>
                         
