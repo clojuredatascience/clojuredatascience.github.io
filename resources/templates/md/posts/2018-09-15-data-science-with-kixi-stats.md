@@ -1,7 +1,7 @@
 {:title "Data Science Screencasts from Lambda Island"
  :layout :post
  :author "Henry Garner"
- :tags  ["clojure" "data science" "screencast" "kixi.stats" "xforms" "transduce"]}
+ :tags  ["clojure" "data science" "screencast" "kixi.stats" "xforms" "transducers"]}
 
 [Lambda Island](https://lambdaisland.com/) has produced a high-quality Clojure-focused screencast every few weeks over the past couple of years. [Arne Brasseur](https://twitter.com/plexus) is the author and producer of these videos. To date he's generated diverse walk-throughs on language fundamentals, library APIs, architectural considerations, and development tooling. The most recent two screencasts, numbers 43 & 44, have signalled a move into the realm of data science. Both screencasts make heavy use of [kixi.stats](https://github.com/mastodonC/kixi.stats): a library of statistical reducing functions. As the author of kixi.stats, I'm relieved to say that I think that the topics are dealt with really well.
 
