@@ -1,9 +1,10 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
+    color: #003d99;
 }
 
 body {
-    background-color: #f8f8f8;
+    background-color: #fff;
     color: #333;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
@@ -21,33 +22,32 @@ body {
 
 .navbar {
     border-radius: 0;
-    background-image: linear-gradient(to right, #CDCAC6, #EDECED);
-    box-shadow: 0 2px 0px rgba(92, 199, 12, 0.8), 0 4px 0px rgba(0, 130, 243, 0.8), 0 4px 2px rgba(34, 34, 34, 0.2);
 }
 
 .navbar-default {
     border: none;
+    background-color: #134186;
 }
 
 .navbar-default .navbar-brand {
-    color: #000;
+    color: #fff;
     font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
+    font-weight: 700;
 }
 
 .navbar-brand {
 }
 
 .navbar-default .navbar-brand:hover {
-    color: #000;
+    color: #fff;
 }
 
 .navbar-default .navbar-nav li a {
-    color: #000;
+    color: #fff;
 }
 
 .navbar-default .navbar-nav li a:hover {
-    color: #000;
+    color: #fff;
     background-color: inherit;
 }
 
